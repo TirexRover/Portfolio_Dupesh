@@ -134,7 +134,8 @@ export default function App() {
     try {
       const answer = await generateAnswer(trimmed, [], {
         personaName: candidateName,
-        profileSummary
+        profileSummary,
+        llmContext: metadata?.llmContext
       });
       
       // Replace loading message with actual response

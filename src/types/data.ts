@@ -36,6 +36,8 @@ export type Metadata = {
     resumeUrl: string;
     linkedin: string;
   };
+  // Natural language context used by the LLM (keeps profile/resume details and usage notes)
+  llmContext?: string;
   stats: {
     yearsExperience: number;
     topSkills: string[];

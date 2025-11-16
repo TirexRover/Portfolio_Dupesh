@@ -40,7 +40,7 @@ exports.handler = async (event) => {
   // Default model fallback (server-side)
   const DEFAULT_AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
   // Default output token cap: 150 unless overridden by env AI_API_MAX_TOKENS or VITE_AI_API_MAX_TOKENS
-  const DEFAULT_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 150);
+  const DEFAULT_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 600);
 
   try {
   const requestBody = JSON.parse(event.body);

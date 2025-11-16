@@ -5,6 +5,8 @@ const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'meta-llama/llama-3.3-70b-
 export type AnswerOptions = {
   personaName?: string;
   profileSummary?: string;
+  // Full natural language LLM context supplied from site.json.metadata.llmContext
+  llmContext?: string;
 };
 
 export type AnswerResult = {
@@ -20,7 +22,7 @@ export async function generateAnswer(
 ): Promise<AnswerResult> {
   const persona = options.personaName ?? 'Dupesh';
   // Call AI API via the server proxy for Q&A
-  const result = await callAI(question, context, persona, options.profileSummary);
+  const result = await callAI(question, context, persona, options.profileSummary, options.llmContext);
   return result;
 }
 
@@ -28,13 +30,14 @@ async function callAI(
   question: string,
   context: RankedChunk[],
   personaName: string,
-  profileSummary?: string
+  profileSummary?: string,
+  llmContext?: string
 ): Promise<AnswerResult> {
   const contextSnippet = buildContext(context);
-  const systemPrompt = buildSystemPrompt(personaName);
+  const systemPrompt = buildSystemPrompt(personaName, llmContext);
   const profileBlock = profileSummary ? `Profile\n${profileSummary}\n\n` : '';
   
-  const MAX_OUTPUT_TOKENS = Number(import.meta.env.VITE_AI_API_MAX_TOKENS ?? 150);
+  const MAX_OUTPUT_TOKENS = Number(import.meta.env.VITE_AI_API_MAX_TOKENS ?? 600);
   const requestBody = {
     model: AI_MODEL,
     messages: [
@@ -74,8 +77,8 @@ async function callAI(
   return { content, sources: buildSources(context), mode: 'api' };
 }
 
-export function buildSystemPrompt(personaName: string): string {
-  return `You are a professional assistant summarizing a person named ${personaName}. Use only the supplied "Profile" and the provided "Context passages"—do not invent facts or add external information. Always write in third person and refer to the person by "${personaName}" or "Dupesh"; do not use "I".
+export function buildSystemPrompt(personaName: string, llmContext?: string): string {
+  const base = `You are a professional assistant summarizing a person named ${personaName}. Use only the supplied "Profile" and the provided "Context passages"—do not invent facts or add external information. Always write in third person and refer to the person by "${personaName}" or "Dupesh"; do not use "I".
 
 - For general or domain-level questions (not explicitly about the candidate):
   1) First, answer the question creatively and helpfully (examples, analogies, and practical suggestions are encouraged).
@@ -91,6 +94,11 @@ export function buildSystemPrompt(personaName: string): string {
 - For "is this candidate fit for X role" questions: include a one-line assessment, 3 evidence-backed bullets tying candidate skills to the role, and 1 "Gaps/Unknowns" bullet listing any clarifying pieces of information you'd need.
 
 Always respond in markdown format, using headings, bullet points, and bolding for emphasis where appropriate. Keep response length under 200 tokens, only exceed when absolutely needed or detailed explanation asked.`;
+  if (!llmContext) return base;
+  // Provide the full LLM context as an explicit block in the system prompt to ensure it's available
+  // to the model for every user message. This prevents the assistant from inventing facts outside the
+  // provided profile/context.
+  return `${base}\n\nLLM Context:\n${llmContext}`;
 }
 
 // AI model handles all answer generation with confidence estimation

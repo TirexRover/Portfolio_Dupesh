@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const AI_API_KEY = process.env.AI_API_KEY || process.env.VITE_AI_API_KEY;
 const AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
-const AI_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 150);
+const AI_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 600);
 
 if (!AI_API_KEY) {
   console.warn('Warning: AI_API_KEY is not set. Proxy will return 401 for AI API calls.');
