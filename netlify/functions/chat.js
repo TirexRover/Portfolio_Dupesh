@@ -74,7 +74,8 @@ exports.handler = async (event) => {
 
     // Get the site URL from Netlify context or use a fallback
     const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || 'https://your-site.netlify.app';
-    const apiUrl = process.env.AI_API_URL || 'https://api.ai-service.example/v1/chat/completions';
+    // Use OpenRouter API endpoint (supports the model we're using)
+    const apiUrl = process.env.AI_API_URL || 'https://openrouter.ai/api/v1/chat/completions';
     
     const response = await fetch(apiUrl, {
       method: 'POST',

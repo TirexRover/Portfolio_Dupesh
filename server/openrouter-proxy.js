@@ -21,7 +21,8 @@ app.post('/ai/chat', async (req, res) => {
   }
 
   try {
-    const url = process.env.AI_API_URL || 'https://api.ai-service.example/v1/chat/completions';
+    // Use OpenRouter API endpoint (supports the model we're using)
+    const url = process.env.AI_API_URL || 'https://openrouter.ai/api/v1/chat/completions';
     // Ensure a model is present on the request (server-side fallback)
     if (!req.body.model) {
       req.body.model = AI_MODEL;
@@ -51,7 +52,7 @@ app.post('/ai/chat', async (req, res) => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${OPENROUTER_KEY}`,
+        Authorization: `Bearer ${AI_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(req.body)
