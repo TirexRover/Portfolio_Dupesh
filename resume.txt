@@ -1,0 +1,17 @@
+Eli Navarro
+Senior AI / ML Engineer
+
+Experience
+Hyperloop AI — Senior AI Engineer — Led multimodal retrieval copilots.
+AtlasCloud — Senior ML Engineer — Built fraud foundation models and eval harnesses.
+
+Projects
+Project Helix — Regulated RAG platform with dense + sparse retrieval.
+AtlasGraph — Streaming GNN anomaly detection.
+AutoEval — LLM evaluation harness.
+
+Skills
+Python, TypeScript, Rust, Go, PyTorch, JAX, LangChain, Kubeflow, TensorRT, Weights & Biases.
+
+Education
+Carnegie Mellon University — MS Machine Learning.

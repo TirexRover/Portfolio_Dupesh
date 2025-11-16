@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "dist"
+
+[env.production]
+  OPENROUTER_KEY = "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"

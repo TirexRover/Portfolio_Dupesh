@@ -1,0 +1,165 @@
+{
+  "chunks": [
+    {
+      "id": "summary-0-0",
+      "text": "eli navarro senior ai ml engineer",
+      "section": "summary",
+      "source": "resume",
+      "start": 0,
+      "end": 33,
+      "keywords": [
+        "eli",
+        "navarro",
+        "senior",
+        "ai",
+        "ml",
+        "engineer"
+      ]
+    },
+    {
+      "id": "experience-1-0",
+      "text": "hyperloop ai senior ai engineer led multimodal retrieval copilots atlascloud senior ml engineer built fraud foundation models and eval harnesses",
+      "section": "experience",
+      "source": "resume",
+      "start": 35,
+      "end": 179,
+      "keywords": [
+        "hyperloop",
+        "ai",
+        "senior",
+        "ai",
+        "engineer",
+        "led",
+        "multimodal",
+        "retrieval",
+        "copilots",
+        "atlascloud",
+        "senior",
+        "ml"
+      ]
+    },
+    {
+      "id": "projects-2-0",
+      "text": "project helix regulated rag platform with dense sparse retrieval atlasgraph streaming gnn anomaly detection autoeval llm evaluation harness",
+      "section": "projects",
+      "source": "resume",
+      "start": 189,
+      "end": 328,
+      "keywords": [
+        "project",
+        "helix",
+        "regulated",
+        "rag",
+        "platform",
+        "with",
+        "dense",
+        "sparse",
+        "retrieval",
+        "atlasgraph",
+        "streaming",
+        "gnn"
+      ]
+    },
+    {
+      "id": "skills-3-0",
+      "text": "python typescript rust go pytorch jax langchain kubeflow tensorrt weights biases",
+      "section": "skills",
+      "source": "resume",
+      "start": 339,
+      "end": 419,
+      "keywords": [
+        "python",
+        "typescript",
+        "rust",
+        "go",
+        "pytorch",
+        "jax",
+        "langchain",
+        "kubeflow",
+        "tensorrt",
+        "weights",
+        "biases"
+      ]
+    },
+    {
+      "id": "education-4-0",
+      "text": "carnegie mellon university ms machine learning",
+      "section": "education",
+      "source": "resume",
+      "start": 431,
+      "end": 477,
+      "keywords": [
+        "carnegie",
+        "mellon",
+        "university",
+        "ms",
+        "machine",
+        "learning"
+      ]
+    },
+    {
+      "id": "summary-5-0",
+      "text": "linkedin export",
+      "section": "summary",
+      "source": "linkedin",
+      "start": 480,
+      "end": 495,
+      "keywords": [
+        "linkedin",
+        "export"
+      ]
+    },
+    {
+      "id": "experience-6-0",
+      "text": "hyperloop ai senior ai engineer 2022 to present atlascloud senior ml engineer 2019 to 2022",
+      "section": "experience",
+      "source": "linkedin",
+      "start": 495,
+      "end": 585,
+      "keywords": [
+        "hyperloop",
+        "ai",
+        "senior",
+        "ai",
+        "engineer",
+        "2022",
+        "to",
+        "present",
+        "atlascloud",
+        "senior",
+        "ml",
+        "engineer"
+      ]
+    },
+    {
+      "id": "projects-7-0",
+      "text": "project helix atlasgraph autoeval",
+      "section": "projects",
+      "source": "linkedin",
+      "start": 593,
+      "end": 626,
+      "keywords": [
+        "project",
+        "helix",
+        "atlasgraph",
+        "autoeval"
+      ]
+    },
+    {
+      "id": "education-8-0",
+      "text": "carnegie mellon university ms machine learning",
+      "section": "education",
+      "source": "linkedin",
+      "start": 628,
+      "end": 674,
+      "keywords": [
+        "carnegie",
+        "mellon",
+        "university",
+        "ms",
+        "machine",
+        "learning"
+      ]
+    }
+  ]
+}

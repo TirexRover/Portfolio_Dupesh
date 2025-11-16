@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --page-bg: linear-gradient(135deg, #e9efff 0%, #fefbff 40%, #dde9ff 100%);
+  /* make cards more translucent so the page gradient shows through (glass effect)
+    and reduce the heavy fill so that backdrop blur is more visible */
+  --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.28));
+  --glass-bg: rgba(255, 255, 255, 0.48);
+  --text-primary: #070b16;
+  --text-secondary: #50586d;
+  --border-color: rgba(16, 34, 72, 0.14);
+  --shadow-soft: 0 28px 55px rgba(15, 24, 52, 0.12);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter Variable', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--page-bg);
+  color: var(--text-primary);
+  transition: background 240ms ease, color 240ms ease;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(99, 102, 241, 0.18), transparent 40%),
+    radial-gradient(circle at 82% 10%, rgba(14, 165, 233, 0.18), transparent 45%),
+    linear-gradient(135deg, rgba(14, 116, 255, 0.12), transparent 55%),
+    linear-gradient(315deg, rgba(236, 72, 153, 0.12), transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body.theme-dark {
+  color-scheme: dark;
+  --page-bg: linear-gradient(135deg, #05060a 0%, #0b1426 45%, #05060a 100%);
+  /* make the card background more translucent for a stronger frosted glass feel in dark mode */
+  --card-bg: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+  /* keep the small accent background for compact UI elements */
+  --glass-bg: rgba(7, 10, 18, 0.72);
+  --text-primary: #f5f8ff;
+  --text-secondary: #a9b4cf;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --shadow-soft: 0 20px 45px rgba(2, 4, 12, 0.85);
+}
+
+body.theme-dark::before {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(99, 102, 241, 0.2), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(56, 189, 248, 0.18), transparent 40%),
+    linear-gradient(120deg, rgba(59, 130, 246, 0.18), transparent 55%),
+    linear-gradient(280deg, rgba(236, 72, 153, 0.18), transparent 60%);
+}
+
+.glass-panel {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+  background-clip: padding-box;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* soft sheen highlight + subtle edge light to make panels feel glassy */
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03));
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+body.theme-dark .glass-panel {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+body.theme-dark .glass-panel::before {
+  /* increase the overlay contrast and shift to subtler white highlight for a more "glass" look */
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  opacity: 0.6;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(96, 224, 255, 0.35);
+  border-radius: 999px;
+}

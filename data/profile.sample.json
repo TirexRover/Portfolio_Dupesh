@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "name": "Your Name",
+    "role": "AI Engineer",
+    "headline": "Short personal headline",
+    "email": "you@example.com",
+    "github": "https://github.com/username",
+    "location": "City · Remote",
+    "resumeUrl": "/resume.pdf",
+    "linkedin": "https://www.linkedin.com/in/username"
+  },
+  "stats": {
+    "topSkills": ["PyTorch", "RAG", "MLOps"],
+    "topProjects": [
+      { "name": "Project One", "summary": "Brief detail", "impact": "% metric" }
+    ],
+    "timeline": [
+      { "label": "Company", "detail": "Role", "year": "2024" }
+    ]
+  }
+}

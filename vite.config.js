@@ -1,0 +1,23 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'node:path';
+export default defineConfig(function (_a) {
+    var mode = _a.mode;
+    return ({
+        base: process.env.VITE_BASE_PATH || '/',
+        plugins: [react()],
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, './src')
+            }
+        },
+        server: {
+            port: 5173,
+            host: '0.0.0.0'
+        },
+        build: {
+            outDir: 'dist',
+            sourcemap: mode === 'development'
+        }
+    });
+});
