@@ -12,7 +12,7 @@
     },
     {
       "role": "assistant",
-      "content": "I'm Eli Navarro, a Senior AI / ML Engineer focused on shipping AI that earns trust. I focus on designing retrieval-first AI systems with delightful UX. Over the past 3+ years I've led launches across Hyperloop AI. Recently I led Project Helix, Regulated-industry co-pilot with hybrid RAG + evals (Cut answer latency 42%)."
+      "content": "I'm Dupesh Nayak, a AI / ML Engineer focused on shipping AI that earns trust. I focus on designing retrieval-first AI systems with delightful UX. Over the past 3+ years I've led launches across Hyperloop AI. Recently I led Project Helix, Regulated-industry co-pilot with hybrid RAG + evals (Cut answer latency 42%)."
     },
     {
       "role": "user",
@@ -39,6 +39,6 @@
       "content": "For Project Helix I treated evaluation like code: curate gold questions, replay them through offline harnesses, and gate launches on precision + UX regressions. That rhythm keeps each copilot trustworthy."
     }
   ],
-  "generatedAt": "2025-11-16T09:39:33.823Z",
+  "generatedAt": "2025-11-16T14:04:25.903Z",
   "source": "fallback"
 }

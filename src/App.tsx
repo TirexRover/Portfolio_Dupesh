@@ -3,19 +3,15 @@ import { Sidebar } from '@/components/Sidebar';
 import { ContextPanel } from '@/components/Context/ContextPanel';
 import { ChatPane } from '@/components/Chat/ChatPane';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { loadChunks, loadMetadata, loadEmbeddings, loadSeedPayload } from '@/lib/dataClient';
-import { createRetrievalIndex } from '@/lib/retrieval';
+import { loadMetadata, loadSeedPayload } from '@/lib/dataClient';
 import { generateAnswer } from '@/lib/answerer';
 import { exampleQuestions } from '@/lib/seeds';
 import type { ChatMessage, SeedPayload } from '@/types/chat';
-import type { Chunk, EmbeddingFile, Metadata } from '@/types/data';
+import type { Metadata } from '@/types/data';
 
 export default function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [chunks, setChunks] = useState<Chunk[]>([]);
   const [metadata, setMetadata] = useState<Metadata | undefined>();
-  const [embeddings, setEmbeddings] = useState<EmbeddingFile | null>(null);
-  const [retrievalReady, setRetrievalReady] = useState<ReturnType<typeof createRetrievalIndex> | null>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string>('Loading data…');
   const [suggestions, setSuggestions] = useState<string[]>(exampleQuestions);
@@ -30,28 +26,18 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const [chunkFile, meta, embeddingFile, seedPayload] = await Promise.all([
-          loadChunks(),
-          loadMetadata(),
-          loadEmbeddings(),
-          loadSeedPayload()
-        ]);
-        setChunks(chunkFile.chunks);
+        const [meta, seedPayload] = await Promise.all([loadMetadata(), loadSeedPayload()]);
         setMetadata(meta);
-        setEmbeddings(embeddingFile);
         hydrateSeedMessages(seedPayload);
         setStatus('');
       } catch (error) {
         console.error(error);
-        setStatus('Failed to load data files. Did you run npm run ingest?');
+        setStatus('Failed to load metadata or seed files.');
       }
     })();
   }, []);
 
-  useEffect(() => {
-    if (!chunks.length) return;
-    setRetrievalReady(createRetrievalIndex(chunks, embeddings));
-  }, [chunks, embeddings]);
+  // Local retrieval removed; OpenRouter will handle Q&A
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -78,12 +64,12 @@ export default function App() {
       setMessages((prev: ChatMessage[]) => {
         if (prev.length) return prev;
         welcomePlayed.current = true;
-        return [
+      return [
           {
             id: 'welcome-message',
             role: 'assistant',
             content:
-              `Hi, I'm ${ownerName}'s RAG chatbot. I can search Dupesh's career history, resume, LinkedIn, GitHub, and more. Just ask what you'd like to know about him.`,
+              `Hi, I'm ${ownerName}'s OpenRouter-powered assistant. I can answer questions about ${ownerName}'s profile and experience. Just ask what you'd like to know.`,
             createdAt: Date.now()
           }
         ];
@@ -123,25 +109,13 @@ export default function App() {
     };
     setMessages((prev: ChatMessage[]) => [...prev, userMessage]);
 
-    if (!retrievalReady) {
-      setMessages((prev: ChatMessage[]) => [
-        ...prev,
-        {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: 'Retrieval engine is not ready yet. Please wait for the data to load.',
-          createdAt: Date.now()
-        }
-      ]);
-      return;
-    }
+    // No local retrieval required; we call OpenRouter directly
 
     const friendlyName = candidateName === 'I' ? 'my' : candidateName.split(' ')[0] ?? candidateName;
     setStatusLine(randomLoadingLine(friendlyName));
     setLoading(true);
     try {
-      const { results } = await retrievalReady.search(trimmed, { topK: 5 });
-      const answer = await generateAnswer(trimmed, results, {
+      const answer = await generateAnswer(trimmed, [], {
         personaName: candidateName,
         profileSummary
       });
@@ -158,7 +132,7 @@ export default function App() {
       setStatusLine('Ready for the next question.');
     } catch (error) {
       console.error(error);
-      setStatusLine('Hit a snag retrieving from memory. Try again.');
+      setStatusLine('Hit a snag generating the answer. Try again.');
       setMessages((prev: ChatMessage[]) => [
         ...prev,
         {
@@ -228,11 +202,11 @@ function buildProfileSummary(metadata?: Metadata): string | undefined {
 function randomLoadingLine(name: string): string {
   const friendly = name || 'my';
   const templates = [
-    `🔎 Looking into ${friendly}'s past launches…`,
-    `📚 Paging ${friendly}'s resume indices…`,
-    `🧠 Retrieving from ${friendly}'s brain cache…`,
-    `📡 Syncing with ${friendly}'s LinkedIn logs…`,
-    `🧭 Connecting context dots for ${friendly}…`
+    `🌐 Querying OpenRouter for ${friendly}…`,
+    `🤖 Generating an answer about ${friendly}…`,
+    `📡 Checking profile details for ${friendly}…`,
+    `� Formatting the answer for you…`,
+    `🔎 Looking up public profile notes for ${friendly}…`
   ];
   return templates[Math.floor(Math.random() * templates.length)];
 }

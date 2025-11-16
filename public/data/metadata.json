@@ -1,13 +1,13 @@
 {
   "candidate": {
-    "name": "Eli Navarro",
-    "role": "Senior AI / ML Engineer",
+    "name": "Dupesh Nayak",
+    "role": "AI / ML Engineer",
     "headline": "Designs retrieval-first AI systems with delightful UX",
     "email": "eli@navarro.ai",
     "github": "https://github.com/elinavarro",
     "location": "San Francisco · Remote",
     "resumeUrl": "/resume.pdf",
-    "linkedin": "https://www.linkedin.com/in/eli-navarro"
+    "linkedin": "https://www.linkedin.com/in/dupeshnayak"
   },
   "stats": {
     "yearsExperience": 3,
@@ -55,5 +55,5 @@
       }
     ]
   },
-  "generatedAt": "2025-11-16T09:39:33.822Z"
+  "generatedAt": "2025-11-16T14:04:25.902Z"
 }

@@ -22,6 +22,15 @@ function pickExisting(options) {
 }
 
 const args = parseArgs(process.argv.slice(2));
+const flagEnabled = (key) => {
+  const v = args[key] ?? args[key.replace(/-(.)/g, (_, c) => c.toUpperCase())];
+  if (v === undefined) return false;
+  if (v === 'false') return false;
+  if (v === 'true') return true;
+  return true;
+};
+const withChunks = flagEnabled('with-chunks');
+const withEmbeddings = flagEnabled('with-embeddings');
 const resumeInput = resolveInput(args.resume || defaultInputs.resume);
 const linkedinInput = resolveInput(args.linkedin || defaultInputs.linkedin);
 const profileInput = resolveInput(args.profile || defaultInputs.profile);
@@ -44,14 +53,19 @@ async function main() {
   const metadata = buildMetadata(profile, chunks);
   const seeds = buildSeedPayload(metadata);
 
-  const embeddings = await maybeCreateEmbeddings(chunks);
-  if (embeddings) {
-    console.log(`✔ generated dense embeddings with model ${embeddings.model}`);
+  let embeddings = null;
+  if (withEmbeddings) {
+    embeddings = await maybeCreateEmbeddings(chunks);
+    if (embeddings) {
+      console.log(`✔ generated dense embeddings with model ${embeddings.model}`);
+    } else {
+      console.log('ℹ embeddings requested but generation failed (install @xenova/transformers for offline vectors)');
+    }
   } else {
-    console.log('ℹ skipped embeddings (install @xenova/transformers for offline vectors)');
+    console.log('ℹ embeddings generation skipped (not requested)');
   }
 
-  await writeDataset({ chunks, metadata, embeddings, seeds });
+  await writeDataset({ chunks, metadata, embeddings, seeds, writeChunks: withChunks, writeEmbeddings: withEmbeddings });
   console.log('✅ ingest complete. Files saved to data/ and public/data/.');
 }
 
@@ -249,16 +263,17 @@ async function maybeCreateEmbeddings(chunks) {
   }
 }
 
-async function writeDataset({ chunks, metadata, embeddings, seeds }) {
+async function writeDataset({ chunks, metadata, embeddings, seeds, writeChunks = false, writeEmbeddings = false }) {
   const payload = { chunks };
   const outDir = path.join(ROOT, 'data');
   const publicDir = path.join(ROOT, 'public', 'data');
   await fs.mkdir(outDir, { recursive: true });
   await fs.mkdir(publicDir, { recursive: true });
-
-  await fs.writeFile(path.join(outDir, 'chunks.json'), JSON.stringify(payload, null, 2));
+  if (writeChunks) {
+    await fs.writeFile(path.join(outDir, 'chunks.json'), JSON.stringify(payload, null, 2));
+    await fs.writeFile(path.join(publicDir, 'chunks.json'), JSON.stringify(payload, null, 2));
+  }
   await fs.writeFile(path.join(outDir, 'metadata.json'), JSON.stringify(metadata, null, 2));
-  await fs.writeFile(path.join(publicDir, 'chunks.json'), JSON.stringify(payload, null, 2));
   await fs.writeFile(path.join(publicDir, 'metadata.json'), JSON.stringify(metadata, null, 2));
 
   if (seeds) {
@@ -266,7 +281,7 @@ async function writeDataset({ chunks, metadata, embeddings, seeds }) {
     await fs.writeFile(path.join(publicDir, 'seeds.json'), JSON.stringify(seeds, null, 2));
   }
 
-  if (embeddings) {
+  if (writeEmbeddings && embeddings) {
     await fs.writeFile(path.join(outDir, 'embeddings.json'), JSON.stringify(embeddings, null, 2));
     await fs.writeFile(path.join(publicDir, 'embeddings.json'), JSON.stringify(embeddings, null, 2));
   }

@@ -1,12 +1,12 @@
 # AI Engineer Chat Portfolio
 
-A chat-first, dual-theme portfolio (Vite + React + TypeScript + Tailwind) that showcases an AI engineer using retrieval over resume + LinkedIn exports. Visitors land on a pre-seeded conversation, immediately see first-person answers, and the app automatically calls OpenRouter (with a repo-level key) or falls back to the local summarizer. All heavy processing happens offline via `npm run ingest`.
+A chat-first, dual-theme portfolio (Vite + React + TypeScript + Tailwind) that showcases an AI engineer and relies on OpenRouter for Q&A over provided profile metadata and seeded transcript. Visitors land on a pre-seeded conversation, immediately see first-person answers, and the app calls OpenRouter (via a server-side proxy by default). Generating metadata and a seeded transcript via `npm run ingest` is optional but helpful to provide a rich profile context.
 
 ## ✨ Highlights
 
 - High-contrast default light theme with tasteful dark mode toggle, refreshed chat bubbles, and contextual side panels.
-- Retrieval engine with hybrid dense (optional embeddings) + TF-IDF fallback plus seeded Q&A generated during ingest.
-- Automatic OpenRouter integration that uses a deployer-provided API key (no UI prompts) with deterministic first-person answers, plus a local summarizer fallback for offline use.
+ - Optional seeded Q&A generated during ingest (seed transcript + metadata).
+   - Automatic OpenRouter integration that uses a deployer-provided API key (no UI prompts) and deterministic first-person answers via server-side proxy.
 - Privacy-first: data stays inside the repo; runtime only fetches `public/data/*.json` generated via `npm run ingest`.
 - Totally hands-free onboarding: ingest creates `seeds.json` so the chat already has a convincing conversation and updated prompt chips before a visitor types anything.
 
@@ -36,7 +36,7 @@ $env:VITE_OPENROUTER_KEY="sk-or-..."
 npm run dev
 ```
 
-> Omit the env var to stay in local-summarizer-only mode.
+> If you omit the env var, the server proxy won't be able to call OpenRouter; set `OPENROUTER_KEY` on the server to enable Q&A.
 
 Or drop the key into a `.env.local` file (not checked in):
 
@@ -92,7 +92,7 @@ This will try the specified endpoint first; `https://api.openrouter.ai/v1/chat/c
      ```bash
      npm install @xenova/transformers
      ```
-   - Leave `data/embeddings.json` untouched if embeddings are unavailable.
+      - Leave `data/embeddings.json` untouched if embeddings are unavailable.
 
 > **Note:** The ingest script includes only offline-safe libraries (`pdf-parse`, `cheerio`). No API keys are required.
 
@@ -124,16 +124,13 @@ This will try the specified endpoint first; `https://api.openrouter.ai/v1/chat/c
 
 - All resume/LinkedIn processing happens locally. Only the generated JSON lives in the repo.
 - No third-party analytics or trackers are loaded.
-- OpenRouter calls use the deployer's `VITE_OPENROUTER_KEY` env var at build/runtime; visitors never see or paste keys. Leave the env unset to force the deterministic local summarizer.
+OpenRouter calls are proxied by the server and use the deployer's `OPENROUTER_KEY` environment variable; visitors never see or paste keys. If the server key is not set, API calls will return 401 and Q&A will be unavailable.
 - To rotate personal data, delete/replace files in `data/` and rerun `npm run ingest` before committing.
 
 ## 🧠 Runtime behavior
 
-- The client fetches `data/chunks.json` / `metadata.json` / `seeds.json` (and `embeddings.json` if present).
-- Retrieval: tries hybrid dense+tf-idf search. If embeddings or the browser embedder fail, it falls back to TF-IDF only.
-- Answering:
-   - **API mode**: The app automatically sends the question + retrieved context to `https://openrouter.ai/api/v1/chat/completions` using the `VITE_OPENROUTER_KEY` env var and a first-person system prompt.
-   - **Local mode**: Uses a deterministic summarizer with evidence bullets and a confidence label.
+   - The client fetches `data/metadata.json` and `data/seeds.json` (optional `data/chunks.json`/`data/embeddings.json` if you still want local retrieval in custom builds).
+   - Answering: The app sends the user's question and any supplied profile/seed data to OpenRouter via the server proxy for answers; there is no local summarizer fallback.
 - Seed data: ingest generates an initial Q&A transcript + prompt chips so the chat looks alive before visitors interact.
 
 ## ♿ Accessibility & UX

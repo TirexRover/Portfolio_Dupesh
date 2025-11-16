@@ -1,6 +1,5 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const ENV_OPENROUTER_KEY = import.meta.env.VITE_OPENROUTER_KEY ?? import.meta.env.VITE_OPENROUTER_API_KEY;
 const OPENROUTER_MODEL = import.meta.env.VITE_OPENROUTER_MODEL ?? 'meta-llama/llama-3.1-8b-instruct:free';
 
 export type AnswerOptions = {
@@ -11,7 +10,7 @@ export type AnswerOptions = {
 export type AnswerResult = {
   content: string;
   sources: SourceRef[];
-  mode: 'local' | 'api';
+  mode: 'api';
 };
 
 export async function generateAnswer(
@@ -19,24 +18,15 @@ export async function generateAnswer(
   context: RankedChunk[],
   options: AnswerOptions
 ): Promise<AnswerResult> {
-  const apiKey = resolveOpenRouterKey();
   const persona = options.personaName ?? 'Dupesh';
-  if (apiKey) {
-    try {
-      const result = await callOpenRouter(question, context, apiKey, persona, options.profileSummary);
-      return result;
-    } catch (error) {
-      console.warn('Failed to call external model, falling back to local summarizer', error);
-    }
-  }
-
-  return summarizeLocally(question, context, persona);
+  // Always call OpenRouter via the server proxy for Q&A
+  const result = await callOpenRouter(question, context, persona, options.profileSummary);
+  return result;
 }
 
 async function callOpenRouter(
   question: string,
   context: RankedChunk[],
-  apiKey: string,
   personaName: string,
   profileSummary?: string
 ): Promise<AnswerResult> {
@@ -58,9 +48,7 @@ async function callOpenRouter(
   };
 
   // Use Netlify function endpoint (works in dev and production)
-  const endpoint = import.meta.env.DEV 
-    ? '/.netlify/functions/chat'
-    : '/.netlify/functions/chat';
+  const endpoint = '/.netlify/functions/chat';
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -85,68 +73,11 @@ async function callOpenRouter(
   return { content, sources: buildSources(context), mode: 'api' };
 }
 
-function resolveOpenRouterKey(): string | undefined {
-  if (ENV_OPENROUTER_KEY) return ENV_OPENROUTER_KEY;
-  if (typeof window !== 'undefined') {
-    const globalKey = (window as unknown as { __OPENROUTER_KEY?: string }).__OPENROUTER_KEY;
-    if (globalKey) return globalKey;
-    try {
-      return window.localStorage?.getItem('openrouter_key') ?? undefined;
-    } catch {
-      return undefined;
-    }
-  }
-  return undefined;
-}
-
 function buildSystemPrompt(personaName: string): string {
-  return `You are a retrieval QA agent describing ${personaName}. Speak strictly in third person, always referring to the candidate as "${personaName}" or "Dupesh"—never use "I". Use only the provided resume/LinkedIn/GitHub context. Prefer concise paragraphs or bullet points (2–4 sentences total). Highlight concrete skills, metrics, employers, and outcomes when available, and finish every response with "Confidence: Low/Medium/High". If information is missing, say "The available resume data doesn't mention that about ${personaName}."`;
+  return `You are an assistant describing ${personaName}. Speak strictly in third person, always referring to the candidate as "${personaName}" or "Dupesh"—never use "I". Use only the provided profile summary and any context passages supplied by the client. Prefer concise paragraphs or bullet points (2–4 sentences total). Highlight concrete skills, metrics, employers, and outcomes when available, and finish every response with "Confidence: Low/Medium/High". If information is missing, say "The available profile data doesn't mention that about ${personaName}."`;
 }
 
-function summarizeLocally(question: string, context: RankedChunk[], personaName: string): AnswerResult {
-  if (!context.length) {
-    return {
-      content: `The available resume data doesn't mention that about ${personaName}. confidence: Low`,
-      sources: [],
-      mode: 'local'
-    };
-  }
-
-  const bullets = context.slice(0, 3).map((chunk) => {
-    const trimmed = chunk.text.length > 260 ? `${chunk.text.slice(0, 257)}…` : chunk.text;
-    return `• ${trimmed} (source: ${chunk.section} — ${chunk.source})`;
-  });
-
-  const confidence = deriveConfidence(question, context);
-  const answer = [
-    `${personaName} summary (${confidence} confidence):`,
-    ...bullets,
-    '',
-    `Confidence: ${confidence}`
-  ].join('\n');
-
-  return {
-    content: answer,
-    sources: buildSources(context),
-    mode: 'local'
-  };
-}
-
-function deriveConfidence(question: string, chunks: RankedChunk[]): 'Low' | 'Medium' | 'High' {
-  const qTokens = new Set(question.toLowerCase().split(/[^\p{L}\p{N}]+/u));
-  const coverage = chunks.reduce((score, chunk) => {
-    let overlap = 0;
-    for (const token of qTokens) {
-      if (!token || token.length < 3) continue;
-      if (chunk.text.toLowerCase().includes(token)) overlap += 1;
-    }
-    return score + overlap;
-  }, 0);
-
-  if (coverage > 8) return 'High';
-  if (coverage > 3) return 'Medium';
-  return 'Low';
-}
+// Local summarizer and confidence estimation removed — OpenRouter is used for all answers.
 
 function buildContext(chunks: RankedChunk[]): string {
   return chunks
