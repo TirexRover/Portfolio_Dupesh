@@ -42,6 +42,62 @@ Or drop the key into a `.env.local` file (not checked in):
 
 ```
 VITE_OPENROUTER_KEY=sk-or-...
+```
+
+## 🌐 Deploying to Netlify
+
+This app is designed to deploy seamlessly to Netlify with built-in serverless function support.
+
+### Required Configuration
+
+**CRITICAL**: You must set the `OPENROUTER_KEY` environment variable in Netlify for the chat to work:
+
+1. Go to your Netlify site dashboard
+2. Navigate to **Site settings** → **Environment variables**
+3. Click **Add a variable**
+4. Set:
+   - **Key**: `OPENROUTER_KEY`
+   - **Value**: Your OpenRouter API key (starts with `sk-or-v1-...`)
+   - **Scopes**: Deploy contexts (Production, Deploy Previews, Branch deploys)
+5. Click **Save**
+6. **Redeploy your site** for the environment variable to take effect
+
+### Get an OpenRouter API Key
+
+1. Visit [https://openrouter.ai/](https://openrouter.ai/)
+2. Sign up or log in
+3. Go to **Keys** section
+4. Create a new API key
+5. Copy the key (it starts with `sk-or-v1-...`)
+
+### Deploy Steps
+
+```bash
+# Build locally to test
+npm run build
+
+# Deploy to Netlify (if using Netlify CLI)
+netlify deploy --prod
+
+# Or connect your GitHub repo to Netlify for automatic deployments
+```
+
+The `netlify.toml` file is already configured with the correct build settings and serverless function paths.
+
+### Troubleshooting Netlify Deployment
+
+**401 Error: "User not found"**
+- This means `OPENROUTER_KEY` is not set in Netlify environment variables
+- Follow the configuration steps above and redeploy
+
+**Function not found**
+- Ensure `netlify.toml` has `functions = "netlify/functions"`
+- Check that `netlify/functions/chat.js` exists in your repo
+
+**CORS errors**
+- The function now includes proper CORS headers
+- Make sure you're using the latest version of `netlify/functions/chat.js`
+
 ### If you get CORS errors
 
 OpenRouter's public endpoints might block cross-origin requests — browsers require the server to opt in to CORS. If you see 404 or CORS errors in the console (common when the provider blocks direct browser calls), run a server-side proxy locally that forwards the request securely and keeps your API key out of the browser.
