@@ -7,7 +7,7 @@ type MobileNavProps = {
 
 export function MobileNav({ activeTab, onTabChange }: MobileNavProps) {
   return (
-    <nav className="glass-panel fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-white/60 bg-white/90 px-4 py-3 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/90 lg:hidden">
+  <nav className="glass-panel fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-white/60 bg-white/90 px-4 py-3 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/60 lg:hidden">
       <button
         onClick={() => onTabChange('profile')}
         className={`no-select flex flex-col items-center gap-1 rounded-2xl px-8 py-2 transition-all ${

@@ -25,27 +25,27 @@ exports.handler = async (event) => {
     };
   }
 
-  // Check if OPENROUTER_KEY is configured
-  if (!process.env.OPENROUTER_KEY) {
-    console.error('OPENROUTER_KEY environment variable is not set');
+  // Check if AI API key is configured
+  if (!process.env.AI_API_KEY) {
+    console.error('AI_API_KEY environment variable is not set');
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
-        error: 'Server configuration error: OPENROUTER_KEY not set. Please configure it in Netlify environment variables.' 
+        error: 'Server configuration error: AI_API_KEY not set. Please configure it in Netlify environment variables.' 
       })
     };
   }
 
   // Default model fallback (server-side)
-  const DEFAULT_OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || process.env.VITE_OPENROUTER_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
-  // Default output token cap: 150 unless overridden by env OPENROUTER_MAX_TOKENS or VITE_OPENROUTER_MAX_TOKENS
-  const DEFAULT_MAX_TOKENS = Number(process.env.OPENROUTER_MAX_TOKENS || process.env.VITE_OPENROUTER_MAX_TOKENS || 150);
+  const DEFAULT_AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
+  // Default output token cap: 150 unless overridden by env AI_API_MAX_TOKENS or VITE_AI_API_MAX_TOKENS
+  const DEFAULT_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 150);
 
   try {
   const requestBody = JSON.parse(event.body);
     if (!requestBody.model) {
-      requestBody.model = DEFAULT_OPENROUTER_MODEL;
+      requestBody.model = DEFAULT_AI_MODEL;
     }
     
     // Ensure there is a system message; if client didn't send one, add a safe fallback
@@ -74,11 +74,12 @@ exports.handler = async (event) => {
 
     // Get the site URL from Netlify context or use a fallback
     const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || 'https://your-site.netlify.app';
+    const apiUrl = process.env.AI_API_URL || 'https://api.ai-service.example/v1/chat/completions';
     
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENROUTER_KEY}`,
+        'Authorization': `Bearer ${process.env.AI_API_KEY}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': siteUrl,
         'X-Title': 'Portfolio Chat Assistant'
@@ -89,13 +90,13 @@ exports.handler = async (event) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error('OpenRouter API error:', response.status, data);
+      console.error('AI API error:', response.status, data);
       return {
         statusCode: response.status,
         headers,
         body: JSON.stringify({ 
           error: data.error || data,
-          message: `OpenRouter API returned ${response.status}`
+          message: `AI API returned ${response.status}`
         })
       };
     }

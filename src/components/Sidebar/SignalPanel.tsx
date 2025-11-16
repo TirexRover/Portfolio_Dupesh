@@ -20,7 +20,7 @@ export function SignalPanel({ stats }: Props) {
         {stats.topSkills.slice(0, 4).map((skill: string) => (
           <div
             key={skill}
-            className="rounded-xl border border-white/60 bg-white/70 px-2.5 py-2 text-center text-slate-800 shadow-sm sm:rounded-2xl sm:px-3 dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
+            className="rounded-xl border border-white/60 bg-white/70 px-2.5 py-2 text-center text-slate-800 shadow-sm sm:rounded-2xl sm:px-3 dark:border-slate-600/50 dark:bg-slate-700/60 dark:text-slate-100 backdrop-blur-sm"
           >
             <span className="line-clamp-2">{skill}</span>
           </div>

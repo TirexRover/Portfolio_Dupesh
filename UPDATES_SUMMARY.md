@@ -46,26 +46,26 @@ Replaced placeholder conversations with actual questions and answers about your 
 - Removed placeholder data (Eli Navarro references, Project Helix, AtlasGraph, etc.)
 - Kept only relevant chunks about your actual experience and education
 
-### 2. Removed OpenRouter References from UI
+### 2. Neutralized provider-specific messaging in the UI
 
 Updated files:
 - **src/App.tsx**:
-  - Changed welcome message from "OpenRouter-powered assistant" to "AI assistant"
-  - Updated comments to reference "AI API" instead of "OpenRouter"
+  - Changed the welcome message from a provider-specific tagline to "AI assistant"
+  - Updated comments to reference the generic "AI API"
   
 - **src/lib/answerer.ts**:
-  - Renamed `OPENROUTER_MODEL` to `AI_MODEL`
-  - Renamed `callOpenRouter()` function to `callAI()`
-  - Updated comments
+  - Replaced the provider-specific model constant with `AI_MODEL`
+  - Renamed the chat helper to `callAI()`
+  - Refreshed the comments to mention the general AI API
 
 - **src/lib/retrieval.ts**:
-  - Updated error messages to reference "AI API" instead of "OpenRouter"
+  - Updated error messages to mention the generic AI API
 
 - **src/lib/embedder.ts**:
-  - Updated console warnings to reference "AI API"
+  - Updated console warnings to reference the generic AI API
 
 - **src/types/chat.ts**:
-  - Changed source type from `'openrouter' | 'fallback'` to `'api' | 'fallback'`
+  - Simplified the `source` union so `'api'` now represents any AI provider
 
 ### 3. Added Creative Loading Messages
 
@@ -97,11 +97,12 @@ All top project summaries are now one-line and focus on key metrics:
 
 1. `public/data/site.json` - Complete profile update with your information
 2. `data/site.json` - Synchronized with public version
-3. `src/App.tsx` - Removed OpenRouter references, added loading bubble functionality
-4. `src/lib/answerer.ts` - Renamed OpenRouter references to generic AI API
+3. `src/App.tsx` - Added loading bubble functionality and neutralized AI copy
+4. `src/lib/answerer.ts` - Pointed the helper at the generic AI API
 5. `src/lib/retrieval.ts` - Updated comments
 6. `src/lib/embedder.ts` - Updated warnings
 7. `src/types/chat.ts` - Updated source type
+8. `server/ai-proxy.js` - Added the renamed AI proxy with fallback prompts
 
 ## Build Status
 
@@ -125,4 +126,4 @@ All top project summaries are now one-line and focus on key metrics:
   - Use only supplied profile/context and include citations to chunks or Profile blocks
   - Finish responses with "Confidence: Low/Medium/High"
 
-- Added server-side fallback system prompts in Netlify function and the local proxy so that OpenRouter always receives a system message even if the client omits one.
+- Added server-side fallback system prompts in Netlify function and the local proxy so that every AI API call includes a system message even if the client omits one.

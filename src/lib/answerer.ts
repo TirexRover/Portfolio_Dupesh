@@ -1,6 +1,6 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const AI_MODEL = import.meta.env.VITE_OPENROUTER_MODEL ?? 'meta-llama/llama-3.3-70b-instruct:free';
+const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'meta-llama/llama-3.3-70b-instruct:free';
 
 export type AnswerOptions = {
   personaName?: string;
@@ -34,7 +34,7 @@ async function callAI(
   const systemPrompt = buildSystemPrompt(personaName);
   const profileBlock = profileSummary ? `Profile\n${profileSummary}\n\n` : '';
   
-  const MAX_OUTPUT_TOKENS = Number(import.meta.env.VITE_OPENROUTER_MAX_TOKENS ?? 150);
+  const MAX_OUTPUT_TOKENS = Number(import.meta.env.VITE_AI_API_MAX_TOKENS ?? 150);
   const requestBody = {
     model: AI_MODEL,
     messages: [
@@ -109,6 +109,6 @@ function buildSources(chunks: RankedChunk[]): SourceRef[] {
     chunkId: chunk.id,
     section: chunk.section,
     label: `${chunk.section} · ${chunk.source}`,
-    snippet: chunk.text.slice(0, 220)
+    snippet: chunk.text.slice(0, 500)
   }));
 }

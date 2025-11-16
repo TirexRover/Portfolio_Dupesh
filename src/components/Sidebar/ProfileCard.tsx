@@ -55,7 +55,7 @@ function ActionLink({ href, label, icon }: ActionLinkProps) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="no-select inline-flex items-center gap-1.5 rounded-lg border border-white/60 bg-white/70 px-2.5 py-2 text-slate-800 shadow-sm transition active:scale-95 sm:gap-2 sm:rounded-xl sm:px-3 sm:hover:-translate-y-0.5 sm:hover:border-primary-300 sm:hover:text-primary-600 dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
+      className="no-select inline-flex items-center gap-1.5 rounded-lg border border-white/60 bg-white/70 px-2.5 py-2 text-slate-800 shadow-sm transition active:scale-95 sm:gap-2 sm:rounded-xl sm:px-3 sm:hover:-translate-y-0.5 sm:hover:border-primary-300 sm:hover:text-primary-600 dark:border-slate-600/50 dark:bg-slate-700/60 dark:text-slate-100 backdrop-blur-sm"
       aria-label={label}
     >
       {icon}

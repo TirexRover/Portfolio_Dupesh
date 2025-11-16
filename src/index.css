@@ -41,10 +41,10 @@ body::before {
 body.theme-dark {
   color-scheme: dark;
   --page-bg: linear-gradient(135deg, #05060a 0%, #0b1426 45%, #05060a 100%);
-  /* make the card background more translucent for a stronger frosted glass feel in dark mode */
-  --card-bg: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
-  /* keep the small accent background for compact UI elements */
-  --glass-bg: rgba(7, 10, 18, 0.72);
+  /* make the card background more translucent for a stronger frosted glass feel in dark mode - slightly lighter */
+  --card-bg: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  /* keep the small accent background for compact UI elements but slightly lighter so text remains readable */
+  --glass-bg: rgba(15, 20, 37, 0.58);
   --text-primary: #f5f8ff;
   --text-secondary: #a9b4cf;
   --border-color: rgba(255, 255, 255, 0.08);
@@ -87,9 +87,9 @@ body.theme-dark .glass-panel {
 }
 
 body.theme-dark .glass-panel::before {
-  /* increase the overlay contrast and shift to subtler white highlight for a more "glass" look */
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  opacity: 0.6;
+  /* increase the overlay contrast and shift to subtler white highlight for a more "glass" look (lighter cards) */
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  opacity: 0.85;
 }
 
 ::-webkit-scrollbar {

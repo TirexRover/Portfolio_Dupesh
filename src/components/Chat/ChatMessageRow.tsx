@@ -35,17 +35,29 @@ export function ChatMessageRow({ message }: Props) {
           components={{
             // Paragraphs
             p: ({ node, ...props }: any) => (
-              <p {...props} className="mb-2 leading-relaxed text-sm sm:text-base" />
+              <p
+                {...props}
+                className="mb-2 leading-relaxed text-sm sm:text-base text-slate-900 dark:text-white"
+              />
             ),
             // Headings (support #, ##, ###)
             h1: ({ node, ...props }: any) => (
-              <h1 {...props} className="my-1 text-lg font-semibold sm:text-xl" />
+              <h1
+                {...props}
+                className="my-1 text-lg font-semibold sm:text-xl text-slate-900 dark:text-white"
+              />
             ),
             h2: ({ node, ...props }: any) => (
-              <h2 {...props} className="my-1 text-base font-semibold sm:text-lg" />
+              <h2
+                {...props}
+                className="my-1 text-base font-semibold sm:text-lg text-slate-900 dark:text-white"
+              />
             ),
             h3: ({ node, ...props }: any) => (
-              <h3 {...props} className="my-1 text-sm font-semibold sm:text-base" />
+              <h3
+                {...props}
+                className="my-1 text-sm font-semibold sm:text-base text-slate-900 dark:text-white"
+              />
             ),
             // Links
             a: ({ node, ...props }: any) => (

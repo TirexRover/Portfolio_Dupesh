@@ -1,23 +1,23 @@
-# 🚨 QUICK FIX: Invalid OpenRouter API Key
+# 🚨 QUICK FIX: Invalid AI API Key
 
 ## The Problem
 Your API key `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` is **INVALID**.
 
-When tested, OpenRouter returns: `{"error":{"message":"User not found.","code":401}}`
+When tested, the AI API returns: `{"error":{"message":"User not found.","code":401}}`
 
 ## The Solution (5 Minutes)
 
 ### 1️⃣ Get New Key
-🔗 Go to: **https://openrouter.ai/keys**
+-🔗 Visit your AI provider's dashboard and regenerate a key
 - Log in
-- Click "Create Key"
-- Copy the new key (starts with `sk-or-v1-`)
+- Click "Create Key" or similar
+- Copy the new key (it typically starts with `sk-or-v1-`)
 
 ### 2️⃣ Update Netlify
-🔗 Go to: **https://app.netlify.com/**
+-🔗 Go to: **https://app.netlify.com/**
 - Select your site
 - Site settings → Environment variables
-- Edit `OPENROUTER_KEY`
+- Edit `AI_API_KEY`
 - Paste your NEW key
 - Click Save
 
@@ -35,12 +35,12 @@ When tested, OpenRouter returns: `{"error":{"message":"User not found.","code":4
 
 ## Still Getting Errors?
 
-**Make sure:**
-- ✅ You copied the ENTIRE key from OpenRouter
+- **Make sure:**
+- ✅ You copied the ENTIRE key from your provider
 - ✅ No extra spaces in the Netlify environment variable
 - ✅ You clicked "Save" in Netlify
 - ✅ You redeployed AFTER updating the variable
-- ✅ Your OpenRouter account is active
+- ✅ Your AI provider account is active
 
 **Check Function Logs:**
 1. Netlify dashboard → Functions tab
@@ -52,7 +52,7 @@ When tested, OpenRouter returns: `{"error":{"message":"User not found.","code":4
 ## Why This Happened
 
 Your old key is invalid because:
-- It was deleted/revoked from OpenRouter
+- It was deleted/revoked by your provider
 - The account associated with it doesn't exist
 - It was never a valid key
 

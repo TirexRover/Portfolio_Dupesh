@@ -257,11 +257,11 @@ function buildProfileSummary(metadata?: Metadata): string | undefined {
 function randomLoadingLine(name: string): string {
   const friendly = name || 'my';
   const templates = [
-    `🌐 Querying OpenRouter for ${friendly}…`,
-    `🤖 Generating an answer about ${friendly}…`,
-    `📡 Checking profile details for ${friendly}…`,
-    `� Formatting the answer for you…`,
-    `🔎 Looking up public profile notes for ${friendly}…`
-  ];
+      `Querying the AI assistant for ${friendly}…`,
+      `Generating an answer about ${friendly}…`,
+      `Checking profile details for ${friendly}…`,
+      `Formatting the response for you…`,
+      `Looking up public profile notes for ${friendly}…`
+    ];
   return templates[Math.floor(Math.random() * templates.length)];
 }

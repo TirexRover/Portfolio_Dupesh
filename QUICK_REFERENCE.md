@@ -14,13 +14,13 @@
 - Purpose: Provides comprehensive context to the AI when answering questions
 - Format: Plain text, easy to edit and extend
 
-### 3. Removed OpenRouter References ✓
-All UI and code references to "OpenRouter" have been replaced with generic "AI" references:
-- Welcome message
-- Loading messages
-- Code comments
-- Function names
-- Type definitions
+### 3. Replaced provider-specific references ✓
+All UI and code references now talk about the generic AI API instead of a specific provider:
+	- Welcome message
+	- Loading messages
+	- Code comments
+	- Function names
+	- Type definitions
 
 ### 4. Creative Loading Messages ✓
 8 different loading messages that rotate randomly:

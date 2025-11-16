@@ -21,7 +21,7 @@ export function ContextPanel({ metadata }: Props) {
           {metadata.stats.topSkills.map((skill: string) => (
             <span
               key={skill}
-              className="rounded-full border border-white/60 bg-white/70 px-2.5 py-1 text-slate-700 shadow-sm sm:px-3 dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
+              className="rounded-full border border-white/60 bg-white/70 px-2.5 py-1 text-slate-700 shadow-sm sm:px-3 dark:border-slate-600/50 dark:bg-slate-700/60 dark:text-slate-100 backdrop-blur-sm"
             >
               {skill}
             </span>
@@ -34,7 +34,7 @@ export function ContextPanel({ metadata }: Props) {
           {metadata.stats.topProjects.map((project: ProjectStat) => (
             <div
               key={project.name}
-              className="rounded-xl border border-white/60 bg-white/75 p-2.5 text-slate-800 shadow-sm sm:rounded-2xl sm:p-3 dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
+              className="rounded-xl border border-white/60 bg-white/75 p-2.5 text-slate-800 shadow-sm sm:rounded-2xl sm:p-3 dark:border-slate-600/50 dark:bg-slate-700/70 dark:text-slate-100 backdrop-blur-sm"
             >
               <p className="font-semibold text-slate-900 dark:text-white">{project.name}</p>
               <p className="mt-1 text-[11px] text-slate-500 sm:text-sm dark:text-slate-300">{project.summary}</p>
@@ -56,7 +56,7 @@ type CardProps = {
 
 function ContextCard({ title, children }: CardProps) {
   return (
-    <section className="glass-panel border border-white/60 bg-white/70 p-4 text-slate-900 shadow-xl sm:p-5 dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+    <section className="glass-panel border border-white/60 bg-white/70 p-4 text-slate-900 shadow-xl sm:p-5 dark:border-slate-600/50 dark:bg-slate-800/60 dark:text-slate-100">
       <div className="mb-2.5 flex items-center justify-between sm:mb-3">
         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-600 sm:text-xs dark:text-slate-300">
           {title}
