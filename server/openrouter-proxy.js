@@ -5,6 +5,7 @@ import fetch from 'node-fetch';
 const app = express();
 const PORT = process.env.PORT || 3000;
 const OPENROUTER_KEY = process.env.OPENROUTER_KEY || process.env.VITE_OPENROUTER_KEY;
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || process.env.VITE_OPENROUTER_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
 
 if (!OPENROUTER_KEY) {
   console.warn('Warning: OPENROUTER_KEY is not set. Proxy will return 401 for OpenRouter calls.');
@@ -20,6 +21,10 @@ app.post('/openrouter/chat', async (req, res) => {
 
   try {
     const url = process.env.OPENROUTER_URL || 'https://openrouter.ai/api/v1/chat/completions';
+    // Ensure a model is present on the request (server-side fallback)
+    if (!req.body.model) {
+      req.body.model = OPENROUTER_MODEL;
+    }
     const response = await fetch(url, {
       method: 'POST',
       headers: {

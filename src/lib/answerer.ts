@@ -1,6 +1,6 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const OPENROUTER_MODEL = import.meta.env.VITE_OPENROUTER_MODEL ?? 'meta-llama/llama-3.1-8b-instruct:free';
+const OPENROUTER_MODEL = import.meta.env.VITE_OPENROUTER_MODEL ?? 'meta-llama/llama-3.3-70b-instruct:free';
 
 export type AnswerOptions = {
   personaName?: string;

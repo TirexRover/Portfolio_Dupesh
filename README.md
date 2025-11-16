@@ -34,6 +34,12 @@ Set an OpenRouter key once via env (no runtime prompt):
 # PowerShell
 $env:VITE_OPENROUTER_KEY="sk-or-..."
 npm run dev
+
+You can also set the OpenRouter model to use (defaults to meta-llama/llama-3.3-70b-instruct:free):
+
+```powershell
+$env:VITE_OPENROUTER_MODEL="meta-llama/llama-3.3-70b-instruct:free"
+```
 ```
 
 > If you omit the env var, the server proxy won't be able to call OpenRouter; set `OPENROUTER_KEY` on the server to enable Q&A.

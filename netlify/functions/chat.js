@@ -37,8 +37,14 @@ exports.handler = async (event) => {
     };
   }
 
+  // Default model fallback (server-side)
+  const DEFAULT_OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || process.env.VITE_OPENROUTER_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
+
   try {
     const requestBody = JSON.parse(event.body);
+    if (!requestBody.model) {
+      requestBody.model = DEFAULT_OPENROUTER_MODEL;
+    }
     
     // Get the site URL from Netlify context or use a fallback
     const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || 'https://your-site.netlify.app';
