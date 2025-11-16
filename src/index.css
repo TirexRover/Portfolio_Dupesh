@@ -100,3 +100,86 @@ body.theme-dark .glass-panel::before {
   background: rgba(96, 224, 255, 0.35);
   border-radius: 999px;
 }
+
+/* Mobile optimizations */
+@media (max-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Prevent text selection on double-tap */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling for mobile */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fixed mobile viewport handling */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari */
+  .min-h-dvh {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+}
+
+/* Mobile landscape optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+  .glass-panel {
+    border-radius: 12px;
+  }
+  
+  header {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* Better text rendering on mobile */
+@media (max-width: 640px) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Prevent zoom on input focus on iOS */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Optimize animations for low-power devices */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

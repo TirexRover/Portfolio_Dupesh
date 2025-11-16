@@ -64,7 +64,7 @@
           "year": "2023-2024"
         },
         {
-          "label": "BSNL",
+          "label": "BSNL India",
           "detail": "Technical Intern - Network Automation",
           "year": "2023"
         }
@@ -74,7 +74,7 @@
   },
   "seeds": {
     "prompts": [
-      "Tell me about yourself",
+      "Tell me about Dupesh",
       "What are your strongest skills?",
       "Tell me about your RAG project",
       "What's your educational background?"

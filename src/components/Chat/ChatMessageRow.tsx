@@ -26,7 +26,7 @@ export function ChatMessageRow({ message }: Props) {
       className={`flex w-full ${alignment}`}
     >
       <div
-        className={`max-w-[min(620px,82%)] rounded-[22px] px-4 py-3 text-[0.95rem] leading-relaxed ${bubbleClasses} ${
+        className={`max-w-[min(620px,92%)] rounded-[20px] px-4 py-3 text-[0.9375rem] leading-relaxed sm:max-w-[min(620px,82%)] sm:rounded-[22px] sm:px-4 sm:py-3 sm:text-[0.95rem] ${bubbleClasses} ${
           isAssistant ? 'self-start' : 'self-end'
         }`}
       >
@@ -35,22 +35,22 @@ export function ChatMessageRow({ message }: Props) {
           components={{
             // Paragraphs
             p: ({ node, ...props }: any) => (
-              <p {...props} className="mb-2 leading-relaxed" />
+              <p {...props} className="mb-2 leading-relaxed text-sm sm:text-base" />
             ),
             // Headings (support #, ##, ###)
             h1: ({ node, ...props }: any) => (
-              <h1 {...props} className="text-xl font-semibold my-1" />
+              <h1 {...props} className="my-1 text-lg font-semibold sm:text-xl" />
             ),
             h2: ({ node, ...props }: any) => (
-              <h2 {...props} className="text-lg font-semibold my-1" />
+              <h2 {...props} className="my-1 text-base font-semibold sm:text-lg" />
             ),
             h3: ({ node, ...props }: any) => (
-              <h3 {...props} className="text-base font-semibold my-1" />
+              <h3 {...props} className="my-1 text-sm font-semibold sm:text-base" />
             ),
             // Links
             a: ({ node, ...props }: any) => (
               // open external links in a new tab and keep tailwind styling
-              <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary-600 underline" />
+              <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary-600 underline break-words" />
             ),
             // Strong
             strong: ({ node, ...props }: any) => (
@@ -58,10 +58,10 @@ export function ChatMessageRow({ message }: Props) {
             ),
             // Lists
             ul: ({ node, ...props }: any) => (
-              <ul {...props} className="list-disc pl-6 space-y-1 my-1" />
+              <ul {...props} className="my-1 space-y-1 pl-5 text-sm sm:pl-6 sm:text-base list-disc" />
             ),
             ol: ({ node, ...props }: any) => (
-              <ol {...props} className="list-decimal pl-6 space-y-1 my-1" />
+              <ol {...props} className="my-1 space-y-1 pl-5 text-sm sm:pl-6 sm:text-base list-decimal" />
             ),
             li: ({ node, ...props }: any) => <li {...props} className="my-1" />,
             // Blockquote
@@ -72,13 +72,13 @@ export function ChatMessageRow({ message }: Props) {
             code({ node, inline, className, children, ...props }: any) {
               const match = /language-(\w+)/.exec(className || '');
               return !inline && match ? (
-                <div className="my-2">
+                <div className="my-2 overflow-x-auto text-xs sm:text-sm">
                   <SyntaxHighlighter style={oneDark} language={match[1]} PreTag="div" {...props}>
                     {String(children).replace(/\n$/, '')}
                   </SyntaxHighlighter>
                 </div>
               ) : (
-                <code className="rounded bg-slate-100 px-1 py-0.5 text-sm dark:bg-slate-800" {...props}>
+                <code className="rounded bg-slate-100 px-1 py-0.5 text-xs break-words sm:text-sm dark:bg-slate-800" {...props}>
                   {children}
                 </code>
               );

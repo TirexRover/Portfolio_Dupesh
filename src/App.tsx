@@ -3,6 +3,7 @@ import { Sidebar } from '@/components/Sidebar';
 import { ContextPanel } from '@/components/Context/ContextPanel';
 import { ChatPane } from '@/components/Chat/ChatPane';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { MobileNav } from '@/components/MobileNav';
 import { loadMetadata, loadSeedPayload } from '@/lib/dataClient';
 import { generateAnswer } from '@/lib/answerer';
 import { exampleQuestions } from '@/lib/seeds';
@@ -20,6 +21,7 @@ export default function App() {
     if (typeof window === 'undefined') return 'light';
     return (localStorage.getItem('portfolio-theme') as 'light' | 'dark') || 'light';
   });
+  const [mobileTab, setMobileTab] = useState<'profile' | 'chat'>('chat');
   const welcomePlayed = useRef(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
@@ -177,13 +179,15 @@ export default function App() {
 
   return (
     <div className="min-h-dvh bg-[var(--page-bg)] text-[var(--text-primary)] transition-colors duration-300">
-      <div className="mx-auto flex min-h-dvh w-full max-w-[1600px] flex-col px-4 py-6 sm:px-6 lg:px-10 xl:px-16">
+      <div className="mx-auto flex min-h-dvh w-full max-w-[1600px] flex-col px-4 py-4 pb-20 sm:px-6 sm:py-6 lg:px-10 lg:pb-8 xl:px-16">
         <header className="mb-4 flex items-center justify-end lg:mb-6">
           <ThemeToggle theme={theme} onToggle={() => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))} />
         </header>
-        <div className="grid flex-1 gap-4 pb-8 lg:grid-cols-[minmax(220px,0.9fr)_minmax(0,2.2fr)_minmax(220px,0.8fr)] lg:gap-6 xl:gap-8">
+        
+        {/* Desktop Layout - 3 Column Grid */}
+        <div className="hidden flex-1 gap-4 lg:grid lg:grid-cols-[minmax(220px,0.9fr)_minmax(0,2.2fr)_minmax(220px,0.8fr)] lg:gap-6 xl:gap-8">
           <Sidebar metadata={metadata} />
-          <div className="min-h-[60vh] lg:min-h-0">
+          <div className="flex min-h-0 flex-col">
             <ChatPane
               messages={messages}
               onSend={handleSend}
@@ -195,9 +199,34 @@ export default function App() {
           </div>
           <ContextPanel metadata={metadata} />
         </div>
+
+        {/* Mobile Layout - Tabbed Interface */}
+        <div className="flex flex-1 flex-col overflow-hidden lg:hidden">
+          {/* Profile Tab */}
+          <div className={`flex h-full flex-col gap-4 overflow-y-auto pb-4 ${mobileTab === 'profile' ? 'block' : 'hidden'}`}>
+            <Sidebar metadata={metadata} />
+            <ContextPanel metadata={metadata} />
+          </div>
+
+          {/* Chat Tab */}
+          <div className={`flex h-full flex-col ${mobileTab === 'chat' ? 'flex' : 'hidden'}`}>
+            <ChatPane
+              messages={messages}
+              onSend={handleSend}
+              loading={loading}
+              exampleQuestions={suggestions}
+              statusLine={statusLine}
+              ownerName={ownerName}
+            />
+          </div>
+        </div>
       </div>
+
+      {/* Mobile Navigation */}
+      <MobileNav activeTab={mobileTab} onTabChange={setMobileTab} />
+
       {status && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-[var(--glass-bg)] px-4 py-2 text-xs text-[var(--text-secondary)] shadow-lg ring-1 ring-black/10 dark:ring-white/10">
+        <div className="fixed bottom-20 left-1/2 z-40 -translate-x-1/2 rounded-full bg-[var(--glass-bg)] px-4 py-2 text-xs text-[var(--text-secondary)] shadow-lg ring-1 ring-black/10 dark:ring-white/10 lg:bottom-4">
           {status}
         </div>
       )}

@@ -15,13 +15,13 @@ export function ContextPanel({ metadata }: Props) {
   }
 
   return (
-    <aside className="flex h-full flex-col gap-4">
+    <aside className="flex h-full flex-col gap-3 sm:gap-4">
       <ContextCard title="Skills cloud">
-        <div className="flex flex-wrap gap-2 text-xs">
+        <div className="flex flex-wrap gap-1.5 text-[11px] sm:gap-2 sm:text-xs">
           {metadata.stats.topSkills.map((skill: string) => (
             <span
               key={skill}
-              className="rounded-full border border-white/60 bg-white/70 px-3 py-1 text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
+              className="rounded-full border border-white/60 bg-white/70 px-2.5 py-1 text-slate-700 shadow-sm sm:px-3 dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
             >
               {skill}
             </span>
@@ -30,32 +30,21 @@ export function ContextPanel({ metadata }: Props) {
       </ContextCard>
 
       <ContextCard title="Top projects">
-        <div className="flex flex-col gap-3 text-sm">
+        <div className="flex flex-col gap-2.5 text-xs sm:gap-3 sm:text-sm">
           {metadata.stats.topProjects.map((project: ProjectStat) => (
             <div
               key={project.name}
-              className="rounded-2xl border border-white/60 bg-white/75 p-3 text-slate-800 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
+              className="rounded-xl border border-white/60 bg-white/75 p-2.5 text-slate-800 shadow-sm sm:rounded-2xl sm:p-3 dark:border-white/10 dark:bg-white/5 dark:text-white backdrop-blur-sm"
             >
               <p className="font-semibold text-slate-900 dark:text-white">{project.name}</p>
-              <p className="text-sm text-slate-500 dark:text-slate-300">{project.summary}</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Impact: {project.impact}</p>
+              <p className="mt-1 text-[11px] text-slate-500 sm:text-sm dark:text-slate-300">{project.summary}</p>
+              <p className="mt-1 text-[10px] text-slate-500 sm:text-xs dark:text-slate-400">Impact: {project.impact}</p>
             </div>
           ))}
         </div>
       </ContextCard>
 
-      <ContextCard title="Timeline">
-        <ol className="relative space-y-3 border-l border-white/60 pl-4 text-xs dark:border-white/10">
-          {metadata.stats.timeline.map((entry: TimelineEntry) => (
-            <li key={entry.label} className="pl-3">
-              <span className="absolute -left-1.5 mt-0.5 h-3 w-3 rounded-full bg-primary-500" />
-              <p className="text-sm font-semibold text-slate-900 dark:text-white">{entry.label}</p>
-              <p className="text-slate-500 dark:text-slate-300">{entry.detail}</p>
-              <p className="text-[10px] uppercase tracking-wide text-slate-400 dark:text-slate-500">{entry.year}</p>
-            </li>
-          ))}
-        </ol>
-      </ContextCard>
+      {/* Timeline moved to the left column under Snapshot for better context */}
     </aside>
   );
 }
@@ -67,12 +56,12 @@ type CardProps = {
 
 function ContextCard({ title, children }: CardProps) {
   return (
-    <section className="glass-panel border border-white/60 bg-white/70 p-5 text-slate-900 shadow-xl dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
-      <div className="mb-3 flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-600 dark:text-slate-300">
+    <section className="glass-panel border border-white/60 bg-white/70 p-4 text-slate-900 shadow-xl sm:p-5 dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+      <div className="mb-2.5 flex items-center justify-between sm:mb-3">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-600 sm:text-xs dark:text-slate-300">
           {title}
         </p>
-        <span className="h-1 w-10 rounded-full bg-gradient-to-r from-primary-400 to-primary-600" />
+        <span className="h-0.5 w-8 rounded-full bg-gradient-to-r from-primary-400 to-primary-600 sm:h-1 sm:w-10" />
       </div>
       {children}
     </section>
