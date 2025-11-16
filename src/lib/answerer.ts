@@ -1,6 +1,6 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const OPENROUTER_MODEL = import.meta.env.VITE_OPENROUTER_MODEL ?? 'meta-llama/llama-3.3-70b-instruct:free';
+const AI_MODEL = import.meta.env.VITE_OPENROUTER_MODEL ?? 'meta-llama/llama-3.3-70b-instruct:free';
 
 export type AnswerOptions = {
   personaName?: string;
@@ -19,12 +19,12 @@ export async function generateAnswer(
   options: AnswerOptions
 ): Promise<AnswerResult> {
   const persona = options.personaName ?? 'Dupesh';
-  // Always call OpenRouter via the server proxy for Q&A
-  const result = await callOpenRouter(question, context, persona, options.profileSummary);
+  // Call AI API via the server proxy for Q&A
+  const result = await callAI(question, context, persona, options.profileSummary);
   return result;
 }
 
-async function callOpenRouter(
+async function callAI(
   question: string,
   context: RankedChunk[],
   personaName: string,
@@ -35,7 +35,7 @@ async function callOpenRouter(
   const profileBlock = profileSummary ? `Profile\n${profileSummary}\n\n` : '';
   
   const requestBody = {
-    model: OPENROUTER_MODEL,
+    model: AI_MODEL,
     messages: [
       { role: 'system', content: systemPrompt },
       {
@@ -77,7 +77,7 @@ function buildSystemPrompt(personaName: string): string {
   return `You are an assistant describing ${personaName}. Speak strictly in third person, always referring to the candidate as "${personaName}" or "Dupesh"—never use "I". Use only the provided profile summary and any context passages supplied by the client. Prefer concise paragraphs or bullet points (2–4 sentences total). Highlight concrete skills, metrics, employers, and outcomes when available, and finish every response with "Confidence: Low/Medium/High". If information is missing, say "The available profile data doesn't mention that about ${personaName}."`;
 }
 
-// Local summarizer and confidence estimation removed — OpenRouter is used for all answers.
+// AI model handles all answer generation with confidence estimation
 
 function buildContext(chunks: RankedChunk[]): string {
   return chunks

@@ -1,4 +1,4 @@
-import { Github, Mail, FileDown, Linkedin } from 'lucide-react';
+import { Github, Mail, FileDown, Linkedin, Phone } from 'lucide-react';
 import type { Metadata } from '@/types/data';
 
 type Props = {
@@ -32,11 +32,12 @@ export function ProfileCard({ metadata }: Props) {
 
       <p className="text-sm font-medium text-slate-700 dark:text-slate-200">{metadata.location}</p>
 
-      <div className="grid grid-cols-2 gap-2 text-sm">
+  <div className="grid grid-cols-2 gap-2 text-sm">
   <ActionLink href={`mailto:${metadata.email}`} label="Email" icon={<Mail size={16} />} />
         <ActionLink href={metadata.github} label="GitHub" icon={<Github size={16} />} />
         <ActionLink href={metadata.resumeUrl} label="Resume" icon={<FileDown size={16} />} />
-        <ActionLink href={metadata.linkedin} label="LinkedIn" icon={<Linkedin size={16} />} />
+    <ActionLink href={metadata.linkedin} label="LinkedIn" icon={<Linkedin size={16} />} />
+    {metadata.phone && <ActionLink href={`tel:${metadata.phone}`} label="Phone" icon={<Phone size={16} />} />}
       </div>
     </section>
   );

@@ -1,0 +1,64 @@
+{
+  "candidate": {
+    "name": "Dupesh Nayak",
+    "role": "AI Engineer",
+    "headline": "Electronics & Communication graduate with a minor in AI and Computer Vision",
+  "email": "nayakdupesh@outlook.com",
+  "phone": "+91 8292927094",
+    "github": "#",
+    "location": "Bengaluru",
+    "resumeUrl": "/resume.pdf",
+    "linkedin": "https://linkedin.com/in/dupeshnayak"
+  },
+  "stats": {
+    "yearsExperience": 2,
+    "topSkills": [
+      "Python",
+      "RAG",
+      "LangChain",
+      "SQL",
+      "Data Analytics",
+      "GenAI",
+      "ML Development"
+    ],
+    "topProjects": [
+      {
+        "name": "Improving Fine-tuned Model using RAG",
+        "summary": "Improved accuracy of a fine-tuned AI model using retrieval-augmented generation and multiple knowledge bases.",
+        "impact": "+20% accuracy on technical queries"
+      },
+      {
+        "name": "Customer Survival Analysis",
+        "summary": "Predictive analysis using data analytics and ML to estimate lifetime value and churn",
+        "impact": "ROC-AUC 0.85"
+      },
+      {
+        "name": "E-Commerce Website Automation",
+        "summary": "Automation and functional testing for e-commerce flows using Selenium and automation agents",
+        "impact": "20% reduction in testing time"
+      },
+      {
+        "name": "Data Visualization Dashboard",
+        "summary": "Interactive dashboards in Plotly/Dash for exploring datasets of up to 10MB",
+        "impact": "Improved exploratory workflows"
+      }
+    ],
+    "timeline": [
+      {
+        "label": "Vivartan Technologies",
+        "detail": "Industry Trainee (Embedded Systems, IoT, AI)",
+        "year": "2023-2024"
+      },
+      {
+        "label": "CyberSpace",
+        "detail": "Co-Founder, Cybersecurity Club",
+        "year": "2023-2024"
+      },
+      {
+        "label": "BSNL",
+        "detail": "Technical Intern",
+        "year": "2023"
+      }
+    ]
+  }
+}

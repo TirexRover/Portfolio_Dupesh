@@ -7,14 +7,14 @@ A chat-first, dual-theme portfolio (Vite + React + TypeScript + Tailwind) that s
 - High-contrast default light theme with tasteful dark mode toggle, refreshed chat bubbles, and contextual side panels.
  - Optional seeded Q&A generated during ingest (seed transcript + metadata).
    - Automatic OpenRouter integration that uses a deployer-provided API key (no UI prompts) and deterministic first-person answers via server-side proxy.
-- Privacy-first: data stays inside the repo; runtime only fetches `public/data/*.json` generated via `npm run ingest`.
-- Totally hands-free onboarding: ingest creates `seeds.json` so the chat already has a convincing conversation and updated prompt chips before a visitor types anything.
+- Privacy-first: data stays inside the repo; runtime only fetches `public/data/site.json` generated via `npm run ingest`.
+- Totally hands-free onboarding: ingest creates `site.json` (containing metadata, seeds, chunks, and optional embeddings) so the chat already has a convincing conversation and updated prompt chips before a visitor types anything.
 
 ## 🗂 Project structure
 
 ```
 ├── ingest/ingest.js        # Offline chunker + optional embeddings
-├── data/                   # Generated datasets (mirrored to public/data)
+├── data/                   # Generated dataset (mirrored to public/data/site.json)
 ├── public/                 # Static assets (favicons, resume, data files)
 ├── src/                    # React app (components, lib, types)
 └── README.md
@@ -145,16 +145,16 @@ This will try the specified endpoint first; `https://api.openrouter.ai/v1/chat/c
    ```bash
    npm run ingest -- --resume=path/to/resume.pdf --linkedin=path/to/linkedin.html
    ```
-3. Update `data/profile.json` (copy from `data/profile.sample.json`) with contact links, top skills/projects, and timeline info.
+3. Update a root-level `profile.json` (copy from `profile.sample.json` in the repository root) with contact links, top skills/projects, and timeline info.
 4. Run `npm run ingest`. The script will:
    - Parse the resume/LinkedIn files.
    - Chunk text into 250–500 token segments with 50-token overlaps.
-   - Build `data/chunks.json`, `data/metadata.json`, and a `data/seeds.json` transcript (all mirrored to `public/data`).
+   - Build `data/site.json` (including `metadata`, `seeds`, `chunks`, and optional `embeddings`) mirrored to `public/data/site.json`.
    - Attempt to generate dense embeddings using `@xenova/transformers` if that package is installed locally. Otherwise it falls back to keyword/Tf-idf search. Install tip:
      ```bash
      npm install @xenova/transformers
      ```
-      - Leave `data/embeddings.json` untouched if embeddings are unavailable.
+   - Leave `embeddings` out of `site.json` if embeddings are unavailable.
 
 > **Note:** The ingest script includes only offline-safe libraries (`pdf-parse`, `cheerio`). No API keys are required.
 
@@ -191,7 +191,7 @@ OpenRouter calls are proxied by the server and use the deployer's `OPENROUTER_KE
 
 ## 🧠 Runtime behavior
 
-   - The client fetches `data/metadata.json` and `data/seeds.json` (optional `data/chunks.json`/`data/embeddings.json` if you still want local retrieval in custom builds).
+   - The client fetches `data/site.json` and uses the `metadata` and `seeds` fields (optional `chunks`/`embeddings` fields are available if you still want local retrieval in custom builds).
    - Answering: The app sends the user's question and any supplied profile/seed data to OpenRouter via the server proxy for answers; there is no local summarizer fallback.
 - Seed data: ingest generates an initial Q&A transcript + prompt chips so the chat looks alive before visitors interact.
 
@@ -204,8 +204,6 @@ OpenRouter calls are proxied by the server and use the deployer's `OPENROUTER_KE
 
 ## 🔧 Troubleshooting
 
-- **“Failed to load data files” banner**: Ensure `npm run ingest` was executed and `public/data/*.json` exists.
-- **Embedding generation skipped**: Install `@xenova/transformers` (optional) or rely on TF-IDF fallback.
-- **GitHub Pages blank screen**: Set `VITE_BASE_PATH` to your repo subpath before `npm run build`/`npm run deploy`.
+ **“Failed to load data files” banner**: Ensure `npm run ingest` was executed and `public/data/site.json` exists.
 
 Happy showcasing! ✨

@@ -1,0 +1,141 @@
+{
+  "metadata": {
+    "candidate": {
+      "name": "Dupesh Nayak",
+      "role": "AI/ML Engineer",
+      "headline": "Builds Intelligent AI Systems with a Focus on LLMs",
+      "email": "nayakdupesh@outlook.com",
+      "phone": "+91 8292927094",
+      "github": "https://github.com/TirexRover/",
+      "location": "Bengaluru",
+      "resumeUrl": "/resume.pdf",
+      "linkedin": "https://linkedin.com/in/dupeshnayak"
+    },
+    "llmContext": "Dupesh Nayak is a recent graduate with a major in Electronics and Communication and a minor in Artificial Intelligence and Computer Vision from Manipal Institute of Technology, Bengaluru (Oct 2021 - Aug 2025, 68%). He possesses strong foundational skills in Python, Machine Learning, and Data Analytics with proven ability to leverage technical skills for Process Automation and predictive modeling. His specialized skills include Data Analytics (SQL, Dashboards, Excel, Tableau, Power BI, Data Visualization, Data Validation, Data Warehousing, AWS), Technical Skills (Python, RAG, LangChain, Process Automation, GenAI, ML Development, HTML, CSS, Data Engineering), and Consulting (Stakeholder Communication, Client Presentations, Workshop Facilitation, Cross-functional Collaboration). He has completed significant projects including: (1) Improving Fine-tuned model using RAG (Oct 2024-Feb 2025) where he implemented RAG to enhance a fine-tuned AI model, improving accuracy of responses to technical queries by 20%, integrating multiple knowledge bases and developing vector database knowledge base and retrieval system; (2) Customer Survival Analysis using AI and Data Analytics (Mar 2023-Jun 2023) leveraging Data Analytics practices for predictive analysis to estimate lifetime value and customer churn, building a Random Forest model with 0.85 ROC-AUC; (3) E-Commerce Website Automation and Testing using Selenium (Oct 2022-Feb 2023) designing test cases for core e-commerce functionalities using AI agents achieving 20% reduction in testing time; (4) Data Visualization Dashboard using Python (Sep 2022-Oct 2022) developing interactive dashboards using Plotly, Dash, and Pandas. His experience includes Industry Training at Vivartan Technologies, Bengaluru (Jun 2023-Sept 2024) completing hands-on training on Embedded Systems, IoT and AI with 5 major projects; Co-Founder of Cybersecurity Club CyberSpace (Jun 2023-Sept 2024) leading industry workshops for over 1,000 participants; and Technical Intern at BSNL (Jun 2023-Jul 2023) automating network diagnostics and reducing troubleshooting time by 30%. He is also a contributor of DoHelp Foundation and VSO, lead vocalist for the MIT band, and winner of high school volleyball and music competitions. Contact: nayakdupesh@outlook.com, +91 8292927094, linkedin.com/in/dupeshnayak.",
+    "stats": {
+      "yearsExperience": 2,
+      "topSkills": [
+        "Python",
+        "RAG",
+        "LangChain",
+        "SQL",
+        "Data Analytics",
+        "GenAI",
+        "ML Development"
+      ],
+      "topProjects": [
+        {
+          "name": "Improving Fine-tuned Model using RAG",
+          "summary": "Enhanced AI model accuracy by 20% using RAG with vector database and multiple knowledge bases",
+          "impact": "+20% accuracy"
+        },
+        {
+          "name": "Customer Survival Analysis",
+          "summary": "Predictive churn analysis with Random Forest achieving 0.85 ROC-AUC",
+          "impact": "0.85 ROC-AUC"
+        },
+        {
+          "name": "E-Commerce Automation Testing",
+          "summary": "Selenium-based test automation with AI agents reducing testing time by 20%",
+          "impact": "-20% testing time"
+        },
+        {
+          "name": "Data Visualization Dashboard",
+          "summary": "Interactive Plotly/Dash dashboards for dataset exploration up to 10MB",
+          "impact": "10MB datasets"
+        }
+      ],
+      "timeline": [
+        {
+          "label": "Vivartan Technologies",
+          "detail": "Industry Training - Embedded Systems, IoT & AI",
+          "year": "2023-2024"
+        },
+        {
+          "label": "CyberSpace Club",
+          "detail": "Co-Founder - Cybersecurity Workshops",
+          "year": "2023-2024"
+        },
+        {
+          "label": "BSNL",
+          "detail": "Technical Intern - Network Automation",
+          "year": "2023"
+        }
+      ]
+    },
+    "generatedAt": "2025-11-16T15:11:11.822Z"
+  },
+  "seeds": {
+    "prompts": [
+      "Tell me about yourself",
+      "What are your strongest skills?",
+      "Tell me about your RAG project",
+      "What's your educational background?"
+    ],
+    "messages": [
+      {
+        "role": "user",
+        "content": "Tell me about yourself"
+      },
+      {
+        "role": "assistant",
+        "content": "I'm Dupesh Nayak, a Data Analyst & AI Engineer with a B.Tech in Electronics & Communication and a minor in AI from Manipal Institute of Technology. I specialize in Data Analytics, Machine Learning, and Process Automation. I completed industry training at Vivartan Technologies and co-founded the CyberSpace cybersecurity club, conducting workshops for 1,000+ participants."
+      },
+      {
+        "role": "user",
+        "content": "What are your strongest skills?"
+      },
+      {
+        "role": "assistant",
+        "content": "I work daily with Python, SQL, and Data Analytics tools like Tableau and Power BI. I'm skilled in RAG, LangChain, GenAI, ML Development, and Process Automation. I also have experience with Data Warehousing, AWS, HTML, and CSS."
+      },
+      {
+        "role": "user",
+        "content": "Tell me about your RAG project"
+      },
+      {
+        "role": "assistant",
+        "content": "I implemented RAG to enhance a fine-tuned AI model, improving its accuracy on technical queries by 20%. I integrated multiple knowledge bases and developed a vector database knowledge base with retrieval system using text embeddings and chunking techniques."
+      },
+      {
+        "role": "user",
+        "content": "What's your educational background?"
+      },
+      {
+        "role": "assistant",
+        "content": "I hold a B.Tech in Electronics and Communication with a minor in Artificial Intelligence and Computer Vision from Manipal Institute of Technology, Bengaluru (Oct 2021 - Aug 2025, 68%). I completed CBSE Science with 86.5% from Holy Cross School."
+      }
+    ],
+    "generatedAt": "2025-11-16T15:11:11.823Z",
+    "source": "fallback"
+  },
+  "chunks": {
+    "chunks": [
+      {
+        "id": "summary-0-0",
+        "text": "dupesh nayak linkedin com in dupeshnayak 91 8292927094 nayakdupesh outlook com professional summary recent graduate with major in electronics and communication and minor in artificial intelligence and computer vision possessing strong foundational skills in python machine learning and data analytics proven ability to leverage technical skills for process automation and predictive modeling specialized skills data analytics sql dashboards excel tableau power bi data visualization data validation data warehousing aws technical skills python rag langchain process automation genai ml development html css data engineering consulting stakeholder communication client presentations workshop facilitation cross functional collaboration soft skills problem solving critical thinking time management strategic planning",
+        "section": "summary",
+        "source": "resume"
+      },
+      {
+        "id": "projects-1-0",
+        "text": "improving fine tuned model using rag oct 2024 feb 2025 implemented rag to enhance a fine tuned ai model improving accuracy of responses to technical queries by 20 integrated multiple knowledge bases to provide context for llm generated responses developed a vector database knowledge base and retrieval system utilizing text embeddings and chunking customer survival analysis using ai and data analytics mar 2023 jun 2023 performed predictive analysis to estimate lifetime value and customer churn built a random forest deep learning model achieving 0 85 roc auc and mitigated class imbalance with weighted modeling e commerce website automation and testing using selenium oct 2022 feb 2023 designed test cases for core e commerce functionalities including shopping cart payment gateway and checkout using automation implemented sql based validation of database integrity during integration testing leveraged ai agents for faster test generation and 20 reduction in testing time data visualization dashboard using python sep 2022 oct 2022 built interactive dashboards using plotly dash and pandas visualized statistical datasets for exploration up to 10 mb",
+        "section": "projects",
+        "source": "resume"
+      },
+      {
+        "id": "experience-2-0",
+        "text": "industry training at vivartan technologies bengaluru jun 2023 sept 2024 hands on training on embedded systems iot and ai focusing on device programming and cloud integration completed 5 major projects addressing real world problems using embedded systems and ai co founder cybersecurity club cyberspace jun 2023 sept 2024 led industry workshops for over 1 000 participants focusing on security and white hat hacking developed leadership and team collaboration skills through event organization internship at bsnl technical intern jun 2023 jul 2023 collaborated with engineering and compliance teams to implement process improvements automating network diagnostics using scripts to reduce troubleshooting time by 30",
+        "section": "experience",
+        "source": "resume"
+      },
+      {
+        "id": "education-3-0",
+        "text": "manipal institute of technology bengaluru bachelor of technology b tech in electronics and communication minor artificial intelligence and computer vision oct 2021 aug 2025 cgpa 68 percent holy cross school chinmaya cbse science with physics chemistry mathematics and computer science 86 5 percent jun 2017 jul 2021 interests volunteer contributor at dohelp foundation and vso assisting individuals in bpl lead vocalist in the mit band winner of high school volleyball and music competitions",
+        "section": "education",
+        "source": "resume"
+      }
+    ]
+  },
+  "embeddings": null
+}

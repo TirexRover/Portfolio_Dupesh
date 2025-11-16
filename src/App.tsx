@@ -37,7 +37,7 @@ export default function App() {
     })();
   }, []);
 
-  // Local retrieval removed; OpenRouter will handle Q&A
+  // AI handles Q&A via API
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -69,7 +69,7 @@ export default function App() {
             id: 'welcome-message',
             role: 'assistant',
             content:
-              `Hi, I'm ${ownerName}'s OpenRouter-powered assistant. I can answer questions about ${ownerName}'s profile and experience. Just ask what you'd like to know.`,
+              `Hi, I'm ${ownerName}'s AI assistant. I can answer questions about ${ownerName}'s profile, experience, skills, and projects. Just ask what you'd like to know.`,
             createdAt: Date.now()
           }
         ];
@@ -109,39 +109,64 @@ export default function App() {
     };
     setMessages((prev: ChatMessage[]) => [...prev, userMessage]);
 
-    // No local retrieval required; we call OpenRouter directly
+    // Call AI API directly for answers
 
     const friendlyName = candidateName === 'I' ? 'my' : candidateName.split(' ')[0] ?? candidateName;
-    setStatusLine(randomLoadingLine(friendlyName));
+    const loadingText = randomLoadingLine(friendlyName);
+    setStatusLine(loadingText);
     setLoading(true);
+
+    // Add temporary loading message bubble
+    const loadingId = `loading-${Date.now()}`;
+    setMessages((prev: ChatMessage[]) => [
+      ...prev,
+      {
+        id: loadingId,
+        role: 'assistant',
+        content: loadingText,
+        createdAt: Date.now(),
+        variant
+      }
+    ]);
+
     try {
       const answer = await generateAnswer(trimmed, [], {
         personaName: candidateName,
         profileSummary
       });
-      setMessages((prev: ChatMessage[]) => [
-        ...prev,
-        {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: answer.content,
-          createdAt: Date.now(),
-          variant
-        }
-      ]);
+      
+      // Replace loading message with actual response
+      setMessages((prev: ChatMessage[]) => 
+        prev.map(msg => 
+          msg.id === loadingId 
+            ? {
+                id: `assistant-${Date.now()}`,
+                role: 'assistant',
+                content: answer.content,
+                createdAt: Date.now(),
+                variant
+              }
+            : msg
+        )
+      );
       setStatusLine('Ready for the next question.');
     } catch (error) {
       console.error(error);
       setStatusLine('Hit a snag generating the answer. Try again.');
-      setMessages((prev: ChatMessage[]) => [
-        ...prev,
-        {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: 'Something went wrong while generating the answer. Please try again.',
-          createdAt: Date.now()
-        }
-      ]);
+      
+      // Replace loading message with error
+      setMessages((prev: ChatMessage[]) =>
+        prev.map(msg =>
+          msg.id === loadingId
+            ? {
+                id: `assistant-${Date.now()}`,
+                role: 'assistant',
+                content: 'Something went wrong while generating the answer. Please try again.',
+                createdAt: Date.now()
+              }
+            : msg
+        )
+      );
     } finally {
       setLoading(false);
       setTimeout(() => {
@@ -187,6 +212,7 @@ function buildProfileSummary(metadata?: Metadata): string | undefined {
     `${candidate.name} — ${candidate.role}`,
     candidate.headline,
     candidate.location ? `Based in ${candidate.location}` : undefined,
+    candidate.email || candidate.phone ? `Contact: ${candidate.email ?? ''}${candidate.email && candidate.phone ? ' · ' : ''}${candidate.phone ?? ''}` : undefined,
     stats?.yearsExperience ? `${stats.yearsExperience}+ years of shipped AI systems` : undefined,
     stats?.topSkills?.length ? `Top skills: ${stats.topSkills.slice(0, 6).join(', ')}` : undefined,
     stats?.topProjects?.length

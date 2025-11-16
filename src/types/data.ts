@@ -30,6 +30,7 @@ export type Metadata = {
     avatar?: string;
     headline: string;
     email: string;
+    phone?: string;
     github: string;
     location: string;
     resumeUrl: string;

@@ -20,5 +20,5 @@ export type SeedPayload = {
   prompts: string[];
   messages: SeedMessageInput[];
   generatedAt: string;
-  source: 'openrouter' | 'fallback';
+  source: 'api' | 'fallback';
 };

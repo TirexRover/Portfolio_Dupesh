@@ -1,3 +1,66 @@
+Dupesh Nayak
+linkedin.com/in/dupeshnayak | +91 8292927094 | nayakdupesh@outlook.com
+
+PROFESSIONAL SUMMARY
+Recent graduate with major in Electronics and Communication and minor in Artificial Intelligence and Computer Vision, possessing strong foundational skills in Python, Machine Learning, and Data Analytics. Proven ability to leverage technical skills for process automation and predictive modeling.
+
+SPECIALIZED SKILLS
+• Data Analytics: SQL, Dashboards, Excel, Tableau, Power BI, Data Visualization, Data Validation, Data Warehousing, AWS
+• Technical Skills: Python, RAG, LangChain, Process Automation, GenAI, ML Development, HTML, CSS, Data Engineering
+• Consulting: Stakeholder Communication, Client Presentations, Workshop Facilitation, Cross-functional Collaboration
+• Soft Skills: Problem-solving, Critical Thinking, Time Management, Strategic Planning
+
+PROJECTS
+Improving Fine-tuned Model using RAG
+Oct 2024 - Feb 2025
+• Implemented RAG to enhance a fine-tuned AI model, improving accuracy of responses to technical queries by 20%.
+• Integrated multiple knowledge bases to provide context for LLM-generated responses.
+• Developed a vector database knowledge base and retrieval system, utilizing text embeddings and chunking.
+
+Customer Survival Analysis using AI and Data Analytics
+Mar 2023 - Jun 2023
+• Performed predictive analysis to estimate lifetime value and customer churn.
+• Built a Random Forest / deep learning model achieving 0.85 ROC-AUC and mitigated class imbalance with weighted modeling.
+
+E-Commerce Website Automation and Testing using Selenium
+Oct 2022 - Feb 2023
+• Designed test cases for core e-commerce functionalities including shopping cart, payment gateway, and checkout using automation.
+• Implemented SQL-based validation of database integrity during integration testing.
+• Leveraged AI agents for faster test generation and 20% reduction in testing time.
+
+Data Visualization Dashboard using Python
+Sep 2022 - Oct 2022
+• Built interactive dashboards using Plotly, Dash, and Pandas.
+• Visualized statistical datasets for exploration up to 10 MB.
+
+EXPERIENCE & CERTIFICATIONS
+Industry Training at Vivartan Technologies - Bengaluru
+Jun 2023 - Sept 2024
+• Hands-on training on embedded systems, IoT and AI focusing on device programming and cloud integration.
+• Completed 5 major projects addressing real-world problems using embedded systems and AI.
+
+Co-Founder - CyberSecurity Club (CyberSpace)
+Jun 2023 - Sept 2024
+• Led industry workshops for over 1,000 participants focusing on security and white hat hacking.
+• Developed leadership and team collaboration skills through event organization.
+
+Internship at BSNL - Technical Intern
+Jun 2023 - Jul 2023
+• Collaborated with engineering and compliance teams to implement process improvements, automating network diagnostics using scripts to reduce troubleshooting time by 30%.
+
+EDUCATION
+Manipal Institute of Technology, Bengaluru
+Bachelor of Technology (B.Tech) in Electronics and Communication (Minor: Artificial Intelligence and Computer Vision)
+Oct 2021 - Aug 2025
+
+Holy Cross School, Chinmaya
+CBSE (Science) with Physics, Chemistry, Mathematics and Computer Science - 86.5%
+Jun 2017 - Jul 2021
+
+INTERESTS
+• Volunteer contributor at DoHelp Foundation and VSO, assisting individuals in BPL.
+• Lead vocalist in the MIT band; winner of high school volleyball and music competitions.
+
 Eli Navarro
 Senior AI / ML Engineer
 

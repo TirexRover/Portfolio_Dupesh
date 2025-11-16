@@ -10,7 +10,7 @@ const ROOT = path.resolve(process.cwd());
 const defaultInputs = {
   resume: pickExisting(['resume.txt', 'resume.pdf']),
   linkedin: pickExisting(['linkedin.html', 'linkedin.json', 'linkedin.txt']),
-  profile: path.join(ROOT, 'data', 'profile.json')
+  profile: pickExisting(['profile.json', 'profile.sample.json'])
 };
 
 function pickExisting(options) {
@@ -22,26 +22,20 @@ function pickExisting(options) {
 }
 
 const args = parseArgs(process.argv.slice(2));
-const flagEnabled = (key) => {
-  const v = args[key] ?? args[key.replace(/-(.)/g, (_, c) => c.toUpperCase())];
-  if (v === undefined) return false;
-  if (v === 'false') return false;
-  if (v === 'true') return true;
-  return true;
-};
-const withChunks = flagEnabled('with-chunks');
-const withEmbeddings = flagEnabled('with-embeddings');
 const resumeInput = resolveInput(args.resume || defaultInputs.resume);
 const linkedinInput = resolveInput(args.linkedin || defaultInputs.linkedin);
 const profileInput = resolveInput(args.profile || defaultInputs.profile);
 
 async function main() {
   console.log('▶︎ ingest >> reading resume and LinkedIn exports');
+  console.log('▶︎ ingest >> using profile file:', profileInput);
   const [resumeText, linkedinText, profile] = await Promise.all([
     readDocument(resumeInput),
     readLinkedIn(linkedinInput),
     readProfile(profileInput)
   ]);
+
+  console.log('▶︎ ingest >> profile summary:', JSON.stringify({ name: profile?.candidate?.name, role: profile?.candidate?.role, topSkills: profile?.stats?.topSkills?.slice(0, 6) }, null, 2));
 
   const resumeSections = splitIntoSections(resumeText, 'resume');
   const linkedinSections = splitIntoSections(linkedinText, 'linkedin');
@@ -53,19 +47,14 @@ async function main() {
   const metadata = buildMetadata(profile, chunks);
   const seeds = buildSeedPayload(metadata);
 
-  let embeddings = null;
-  if (withEmbeddings) {
-    embeddings = await maybeCreateEmbeddings(chunks);
-    if (embeddings) {
-      console.log(`✔ generated dense embeddings with model ${embeddings.model}`);
-    } else {
-      console.log('ℹ embeddings requested but generation failed (install @xenova/transformers for offline vectors)');
-    }
+  const embeddings = await maybeCreateEmbeddings(chunks);
+  if (embeddings) {
+    console.log(`✔ generated dense embeddings with model ${embeddings.model}`);
   } else {
-    console.log('ℹ embeddings generation skipped (not requested)');
+    console.log('ℹ skipped embeddings (install @xenova/transformers for offline vectors)');
   }
 
-  await writeDataset({ chunks, metadata, embeddings, seeds, writeChunks: withChunks, writeEmbeddings: withEmbeddings });
+  await writeDataset({ chunks, metadata, embeddings, seeds });
   console.log('✅ ingest complete. Files saved to data/ and public/data/.');
 }
 
@@ -263,27 +252,33 @@ async function maybeCreateEmbeddings(chunks) {
   }
 }
 
-async function writeDataset({ chunks, metadata, embeddings, seeds, writeChunks = false, writeEmbeddings = false }) {
-  const payload = { chunks };
+async function writeDataset({ chunks, metadata, embeddings, seeds }) {
   const outDir = path.join(ROOT, 'data');
   const publicDir = path.join(ROOT, 'public', 'data');
   await fs.mkdir(outDir, { recursive: true });
   await fs.mkdir(publicDir, { recursive: true });
-  if (writeChunks) {
-    await fs.writeFile(path.join(outDir, 'chunks.json'), JSON.stringify(payload, null, 2));
-    await fs.writeFile(path.join(publicDir, 'chunks.json'), JSON.stringify(payload, null, 2));
-  }
-  await fs.writeFile(path.join(outDir, 'metadata.json'), JSON.stringify(metadata, null, 2));
-  await fs.writeFile(path.join(publicDir, 'metadata.json'), JSON.stringify(metadata, null, 2));
 
-  if (seeds) {
-    await fs.writeFile(path.join(outDir, 'seeds.json'), JSON.stringify(seeds, null, 2));
-    await fs.writeFile(path.join(publicDir, 'seeds.json'), JSON.stringify(seeds, null, 2));
-  }
+  const site = {
+    metadata,
+    seeds: seeds ?? null,
+    chunks: { chunks },
+    embeddings: embeddings ?? null
+  };
 
-  if (writeEmbeddings && embeddings) {
-    await fs.writeFile(path.join(outDir, 'embeddings.json'), JSON.stringify(embeddings, null, 2));
-    await fs.writeFile(path.join(publicDir, 'embeddings.json'), JSON.stringify(embeddings, null, 2));
+  await fs.writeFile(path.join(outDir, 'site.json'), JSON.stringify(site, null, 2));
+  await fs.writeFile(path.join(publicDir, 'site.json'), JSON.stringify(site, null, 2));
+
+  // Cleanup old individual files so the data/ directory contains only site.json
+  const oldFiles = ['chunks.json', 'metadata.json', 'seeds.json', 'embeddings.json', 'profile.json', 'profile.sample.json'];
+  for (const fileName of oldFiles) {
+    try {
+      const outPath = path.join(outDir, fileName);
+      const pubPath = path.join(publicDir, fileName);
+      await fs.rm(outPath, { force: true });
+      await fs.rm(pubPath, { force: true });
+    } catch (err) {
+      // ignore errors while attempting to delete files that may not exist
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import type { Metadata } from '@/types/data';
+import type { Metadata, ChunkFile, EmbeddingFile } from '@/types/data';
 import type { SeedPayload } from '@/types/chat';
 
 async function fetchJson<T>(path: string): Promise<T> {
@@ -9,12 +9,27 @@ async function fetchJson<T>(path: string): Promise<T> {
   return response.json();
 }
 
-export async function loadMetadata(): Promise<Metadata> {
-  return fetchJson<Metadata>('/data/metadata.json');
+type SitePayload = {
+  metadata: Metadata;
+  seeds?: SeedPayload;
+  chunks?: ChunkFile;
+  embeddings?: EmbeddingFile;
+};
+
+async function loadSite(): Promise<SitePayload> {
+  return fetchJson<SitePayload>('/data/site.json');
 }
+
+export async function loadMetadata(): Promise<Metadata> {
+  const site = await loadSite();
+  if (!site?.metadata) throw new Error('Metadata not found in site.json');
+  return site.metadata;
+}
+
 export async function loadSeedPayload(): Promise<SeedPayload | null> {
   try {
-    return await fetchJson<SeedPayload>('/data/seeds.json');
+    const site = await loadSite();
+    return site.seeds ?? null;
   } catch (error) {
     console.warn('Seed conversation unavailable, using fallback');
     return null;
