@@ -34,6 +34,7 @@ async function callAI(
   const systemPrompt = buildSystemPrompt(personaName);
   const profileBlock = profileSummary ? `Profile\n${profileSummary}\n\n` : '';
   
+  const MAX_OUTPUT_TOKENS = Number(import.meta.env.VITE_OPENROUTER_MAX_TOKENS ?? 150);
   const requestBody = {
     model: AI_MODEL,
     messages: [
@@ -43,8 +44,8 @@ async function callAI(
         content: `${profileBlock}Context passages:\n${contextSnippet}\n\nQuestion: ${question}`
       }
     ],
-    max_tokens: 400,
-    temperature: 0.4
+  max_tokens: MAX_OUTPUT_TOKENS,
+    temperature: 0.75
   };
 
   // Use Netlify function endpoint (works in dev and production)

@@ -39,6 +39,8 @@ exports.handler = async (event) => {
 
   // Default model fallback (server-side)
   const DEFAULT_OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || process.env.VITE_OPENROUTER_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
+  // Default output token cap: 150 unless overridden by env OPENROUTER_MAX_TOKENS or VITE_OPENROUTER_MAX_TOKENS
+  const DEFAULT_MAX_TOKENS = Number(process.env.OPENROUTER_MAX_TOKENS || process.env.VITE_OPENROUTER_MAX_TOKENS || 150);
 
   try {
   const requestBody = JSON.parse(event.body);
@@ -48,7 +50,7 @@ exports.handler = async (event) => {
     
     // Ensure there is a system message; if client didn't send one, add a safe fallback
     const fallbackSystemPrompt = `You are a professional assistant for a candidate portfolio. Use only the supplied "Profile" and "Context passages"—do not invent facts. Always write in third person and refer to the candidate by name found in the profile or as "the candidate". For general questions, answer the domain question creatively and then add a short "How this applies to [candidate]:" mapping that links the answer to the candidate's skills/experience when possible. For candidate-specific questions, be concise, cite supporting context or profile blocks, and finish every response with "Confidence: Low/Medium/High". If information is missing, say exactly: "The available profile data doesn't mention that about the candidate."`;
-    if (!Array.isArray(requestBody.messages)) {
+  if (!Array.isArray(requestBody.messages)) {
       // Convert request body into a sensible message flow if caller provided a raw prompt
       const userContent = requestBody.prompt ?? requestBody.content ?? JSON.stringify(requestBody);
       requestBody.messages = [
@@ -60,6 +62,14 @@ exports.handler = async (event) => {
       if (!hasSystem) {
         requestBody.messages.unshift({ role: 'system', content: fallbackSystemPrompt });
       }
+    }
+
+    // Enforce max tokens cap
+    const requestedMax = Number(requestBody.max_tokens ?? 0);
+    if (!requestBody.max_tokens || Number.isNaN(requestedMax) || requestedMax > DEFAULT_MAX_TOKENS) {
+      requestBody.max_tokens = DEFAULT_MAX_TOKENS;
+    } else {
+      requestBody.max_tokens = requestedMax;
     }
 
     // Get the site URL from Netlify context or use a fallback
