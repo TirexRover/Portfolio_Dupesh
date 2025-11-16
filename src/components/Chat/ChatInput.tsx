@@ -34,7 +34,7 @@ export function ChatInput({ onSend, loading, suggestions, statusLine, ownerName 
             <button
               key={suggestion}
               type="button"
-              className="no-select rounded-full border border-slate-200/80 bg-white/80 px-2.5 py-1.5 text-slate-700 shadow-sm transition active:scale-95 sm:px-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-200 hover:border-white/80 hover:bg-white/90 sm:hover:border-white/90 sm:hover:bg-white/90 dark:border-white/10 dark:bg-white/5 dark:text-white/80 dark:hover:border-white/40 dark:hover:bg-white/10 dark:hover:text-white"
+              className="no-select rounded-full border border-slate-200/80 bg-white/80 px-2.5 py-1.5 text-slate-700 shadow-sm transition active:scale-95 sm:px-3 sm:hover:-translate-y-0.5 sm:hover:border-primary-300 sm:hover:text-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-200 dark:border-white/10 dark:bg-white/5 dark:text-white/80 dark:hover:border-white/40 dark:hover:bg-white/10 dark:hover:text-white"
               onClick={() => setValue(suggestion)}
             >
               <span className="line-clamp-1">{suggestion}</span>
