@@ -116,3 +116,13 @@ All top project summaries are now one-line and focus on key metrics:
 3. Check that your profile information displays properly
 4. Test the chat functionality to ensure responses are accurate
 5. Deploy to your hosting platform when ready
+
+### 5. Updated system prompts & server fallback
+
+- Updated the client-side AI system prompt to instruct the model to:
+  - Be creative when answering general/domain-level questions and provide helpful examples
+  - When appropriate, include a short "How this applies to <candidate>" section that maps general answers to the candidate (one-line suitability, supporting evidence, and gaps/unknowns)
+  - Use only supplied profile/context and include citations to chunks or Profile blocks
+  - Finish responses with "Confidence: Low/Medium/High"
+
+- Added server-side fallback system prompts in Netlify function and the local proxy so that OpenRouter always receives a system message even if the client omits one.

@@ -41,11 +41,27 @@ exports.handler = async (event) => {
   const DEFAULT_OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || process.env.VITE_OPENROUTER_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
 
   try {
-    const requestBody = JSON.parse(event.body);
+  const requestBody = JSON.parse(event.body);
     if (!requestBody.model) {
       requestBody.model = DEFAULT_OPENROUTER_MODEL;
     }
     
+    // Ensure there is a system message; if client didn't send one, add a safe fallback
+    const fallbackSystemPrompt = `You are a professional assistant for a candidate portfolio. Use only the supplied "Profile" and "Context passages"—do not invent facts. Always write in third person and refer to the candidate by name found in the profile or as "the candidate". For general questions, answer the domain question creatively and then add a short "How this applies to [candidate]:" mapping that links the answer to the candidate's skills/experience when possible. For candidate-specific questions, be concise, cite supporting context or profile blocks, and finish every response with "Confidence: Low/Medium/High". If information is missing, say exactly: "The available profile data doesn't mention that about the candidate."`;
+    if (!Array.isArray(requestBody.messages)) {
+      // Convert request body into a sensible message flow if caller provided a raw prompt
+      const userContent = requestBody.prompt ?? requestBody.content ?? JSON.stringify(requestBody);
+      requestBody.messages = [
+        { role: 'system', content: fallbackSystemPrompt },
+        { role: 'user', content: userContent }
+      ];
+    } else {
+      const hasSystem = requestBody.messages.some((m) => m.role === 'system');
+      if (!hasSystem) {
+        requestBody.messages.unshift({ role: 'system', content: fallbackSystemPrompt });
+      }
+    }
+
     // Get the site URL from Netlify context or use a fallback
     const siteUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || 'https://your-site.netlify.app';
     

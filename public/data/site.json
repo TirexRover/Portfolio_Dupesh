@@ -15,18 +15,20 @@
     "stats": {
       "yearsExperience": 2,
       "topSkills": [
+        "Agentic AI",
         "Python",
+        "LLM-Ops",
         "RAG",
         "LangChain",
-        "SQL",
-        "Data Analytics",
         "GenAI",
+        "Fine-Tuning LLMs",
+        "Data Analytics",
         "ML Development"
       ],
       "topProjects": [
         {
           "name": "Improving Fine-tuned Model using RAG",
-          "summary": "Enhanced AI model accuracy by 20% using RAG with vector database and multiple knowledge bases",
+          "summary": "Enhanced AI model accuracy by 20% using RAG with vector database and knowledge bases",
           "impact": "+20% accuracy"
         },
         {
@@ -41,11 +43,16 @@
         },
         {
           "name": "Data Visualization Dashboard",
-          "summary": "Interactive Plotly/Dash dashboards for dataset exploration up to 10MB",
-          "impact": "10MB datasets"
+          "summary": "Interactive BI dashboards for dataset exploration for Clients",
+          "impact": "Intricate Pattern Discovery"
         }
       ],
       "timeline": [
+        {
+          "label": "Accure AI",
+          "detail": "AI/ML Engineer",
+          "year": "2025-Present"
+        },
         {
           "label": "Vivartan Technologies",
           "detail": "Industry Training - Embedded Systems, IoT & AI",
@@ -53,7 +60,7 @@
         },
         {
           "label": "CyberSpace Club",
-          "detail": "Co-Founder - Cybersecurity Workshops",
+          "detail": "Co-Founder - Cybersecurity Club",
           "year": "2023-2024"
         },
         {

@@ -25,6 +25,21 @@ app.post('/openrouter/chat', async (req, res) => {
     if (!req.body.model) {
       req.body.model = OPENROUTER_MODEL;
     }
+
+    // Add a safe fallback system prompt if client didn't provide one
+    const fallbackSystemPrompt = `You are a professional assistant for a candidate portfolio. Use only the supplied "Profile" and "Context passages"—do not invent facts. Always write in third person and refer to the candidate by name found in the profile or as "the candidate". For general questions, answer the domain question creatively and then add a short "How this applies to [candidate]:" mapping that links the answer to the candidate's skills/experience when possible. For candidate-specific questions, be concise, cite supporting context or profile blocks, and finish every response with "Confidence: Low/Medium/High". If information is missing, say exactly: "The available profile data doesn't mention that about the candidate."`;
+    if (!Array.isArray(req.body.messages)) {
+      const userContent = req.body.prompt ?? req.body.content ?? JSON.stringify(req.body);
+      req.body.messages = [
+        { role: 'system', content: fallbackSystemPrompt },
+        { role: 'user', content: userContent }
+      ];
+    } else {
+      const hasSystem = req.body.messages.some((m) => m.role === 'system');
+      if (!hasSystem) {
+        req.body.messages.unshift({ role: 'system', content: fallbackSystemPrompt });
+      }
+    }
     const response = await fetch(url, {
       method: 'POST',
       headers: {
