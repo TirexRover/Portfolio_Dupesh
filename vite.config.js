@@ -4,7 +4,7 @@ import path from 'node:path';
 export default defineConfig(function (_a) {
     var mode = _a.mode;
     return ({
-        base: process.env.VITE_BASE_PATH || '/',
+        base: process.env.VITE_BASE_PATH || './',
         plugins: [react()],
         resolve: {
             alias: {

@@ -36,7 +36,7 @@ async function callAI(
   const contextSnippet = buildContext(context);
   const systemPrompt = buildSystemPrompt(personaName, llmContext);
   const profileBlock = profileSummary ? `Profile\n${profileSummary}\n\n` : '';
-  
+
   const MAX_OUTPUT_TOKENS = Number(import.meta.env.VITE_AI_API_MAX_TOKENS ?? 600);
   const requestBody = {
     model: AI_MODEL,
@@ -47,12 +47,12 @@ async function callAI(
         content: `${profileBlock}Context passages:\n${contextSnippet}\n\nQuestion: ${question}`
       }
     ],
-  max_tokens: MAX_OUTPUT_TOKENS,
+    max_tokens: MAX_OUTPUT_TOKENS,
     temperature: 0.75
   };
 
-  // Use Netlify function endpoint (works in dev and production)
-  const endpoint = '/.netlify/functions/chat';
+  // Use API endpoint (defaults to Vercel path, falls back to Netlify path if configured)
+  const endpoint = import.meta.env.VITE_API_ENDPOINT || '/api/chat';
 
   const response = await fetch(endpoint, {
     method: 'POST',
