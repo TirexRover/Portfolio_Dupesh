@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     }
 
     // Default model fallback (server-side)
-    const DEFAULT_AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'meta-llama/llama-3.3-70b-instruct:free';
+    const DEFAULT_AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'openrouter/owl-alpha';
     // Default output token cap
     const DEFAULT_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 600);
 

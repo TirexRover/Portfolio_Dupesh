@@ -36,10 +36,10 @@ Set your AI API key once via env (no runtime prompt):
 $env:VITE_AI_API_KEY="your-api-key"
 npm run dev
 
-You can also set the AI API model to use (defaults to meta-llama/llama-3.3-70b-instruct:free):
+You can also set the AI API model to use (defaults to openrouter/owl-alpha):
 
 ```powershell
-$env:VITE_AI_API_MODEL="meta-llama/llama-3.3-70b-instruct:free"
+$env:VITE_AI_API_MODEL="openrouter/owl-alpha"
 ```
 ```
 

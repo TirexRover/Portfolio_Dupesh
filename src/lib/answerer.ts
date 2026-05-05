@@ -1,6 +1,6 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'meta-llama/llama-3.3-70b-instruct:free';
+const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'openrouter/owl-alpha';
 
 export type AnswerOptions = {
   personaName?: string;
