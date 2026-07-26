@@ -1,6 +1,6 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'openrouter/owl-alpha';
+const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'nvidia/nemotron-3-nano-30b-a3b:free';
 
 export type AnswerOptions = {
   personaName?: string;

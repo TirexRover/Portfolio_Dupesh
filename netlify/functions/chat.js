@@ -38,7 +38,7 @@ exports.handler = async (event) => {
   }
 
   // Default model fallback (server-side)
-  const DEFAULT_AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'openrouter/owl-alpha';
+  const DEFAULT_AI_MODEL = process.env.AI_MODEL || process.env.VITE_AI_API_MODEL || 'nvidia/nemotron-3-nano-30b-a3b:free';
   // Default output token cap: 150 unless overridden by env AI_API_MAX_TOKENS or VITE_AI_API_MAX_TOKENS
   const DEFAULT_MAX_TOKENS = Number(process.env.AI_API_MAX_TOKENS || process.env.VITE_AI_API_MAX_TOKENS || 600);
 
