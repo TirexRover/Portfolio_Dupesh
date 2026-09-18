@@ -1,6 +1,6 @@
 import type { RankedChunk, SourceRef } from '@/types/data';
 
-const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'google/gemma-4-26b-a4b-it:free';
+const AI_MODEL = import.meta.env.VITE_AI_API_MODEL ?? 'nvidia/nemotron-3-nano-30b-a3b';
 
 export type AnswerOptions = {
   personaName?: string;

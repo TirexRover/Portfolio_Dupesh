@@ -36,10 +36,10 @@ Set your AI API key once via env (no runtime prompt):
 $env:VITE_AI_API_KEY="your-api-key"
 npm run dev
 
-You can also set the AI API model to use (defaults to nvidia/nemotron-3-nano-30b-a3b:free):
+You can also set the AI API model to use (defaults to nvidia/nemotron-3-nano-30b-a3b):
 
 ```powershell
-$env:VITE_AI_API_MODEL="nvidia/nemotron-3-nano-30b-a3b:free"
+$env:VITE_AI_API_MODEL="nvidia/nemotron-3-nano-30b-a3b"
 ```
 ```
 

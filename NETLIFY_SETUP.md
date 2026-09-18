@@ -118,16 +118,16 @@ const headers = {
 
 ## 💰 OpenRouter Costs
 
-The default model `nvidia/nemotron-3-nano-30b-a3b:free` is **FREE** but rate-limited.
+The default model `nvidia/nemotron-3-nano-30b-a3b` is the configured OpenRouter choice.
 
 To use other models or increase rate limits:
 1. Add credits to your OpenRouter account
 2. Change the model in your code by setting `VITE_OPENROUTER_MODEL` environment variable
    
-   Example: set `VITE_OPENROUTER_MODEL` to nvidia/nemotron-3-nano-30b-a3b:free
+   Example: set `VITE_OPENROUTER_MODEL` to nvidia/nemotron-3-nano-30b-a3b
    ```bash
    # PowerShell example (development)
-   $env:VITE_OPENROUTER_MODEL="nvidia/nemotron-3-nano-30b-a3b:free"
+   $env:VITE_OPENROUTER_MODEL="nvidia/nemotron-3-nano-30b-a3b"
    ```
 
 ## 📝 Checklist
